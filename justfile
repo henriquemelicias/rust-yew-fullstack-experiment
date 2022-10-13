@@ -1,0 +1,25 @@
+#!/usr/bin/env just --justfile
+# just manual: https://github.com/casey/just/#readme
+
+_default:
+    @just --list
+
+# Runs clippy on the sources
+check:
+    cargo clippy --locked -- -D warnings
+
+# Cargo and clippy fix
+fix:
+    cargo clippy --fix --allow-dirty --allow-staged
+
+# Format using custom rustfmt
+rustfmt:
+    find -type f -not -path "*/[@.]*" -not -path "*/target/*" -not -path "*/vendor/*" -path "*.rs" | xargs ./rustfmt
+
+# Vendor all dependencies locally
+vendor:
+    cargo vendor
+
+# Runs unit tests
+test:
+    cargo test --locked
