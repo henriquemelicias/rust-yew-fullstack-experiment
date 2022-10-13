@@ -4,22 +4,26 @@
 _default:
     @just --list
 
-# Runs clippy on the sources
+# Runs clippy on the sources.
 check:
     cargo clippy --locked -- -D warnings
 
-# Cargo and clippy fix
+# Cargo and clippy fix.
 fix:
     cargo clippy --fix --allow-dirty --allow-staged
 
-# Format using custom rustfmt
+# Format using custom rustfmt.
 rustfmt:
     find -type f -not -path "*/[@.]*" -not -path "*/target/*" -not -path "*/vendor/*" -path "*.rs" | xargs ./rustfmt
 
-# Vendor all dependencies locally
+# Vendor all dependencies locally.
 vendor:
     cargo vendor
 
-# Runs unit tests
-test:
+# Runs all tests.
+test-all:
     cargo test --locked
+
+# Runs tests of the specified package.
+test PACKAGE:
+    cargo test -p {{PACKAGE}} --locked

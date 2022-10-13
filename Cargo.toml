@@ -7,3 +7,14 @@ members = [
     #Internal
     "common"
 ]
+
+default-members = [
+  "backend",
+]
+
+[profile.release]
+lto = true
+debug = false
+debug-assertions = false
+codegen-units = 1
+panic = "abort"

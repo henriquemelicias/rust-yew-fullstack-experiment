@@ -3,3 +3,5 @@
 #![warn( clippy::nursery )]
 #![warn( clippy::complexity )]
 #![warn( clippy::perf )]
+
+pub(crate) mod app;
