@@ -1,5 +1,5 @@
 /*
- * Onion architecture: Services can use domain and drivers.
+ * Onion architecture: Services can use domain and infrastructure.
  */
 
 #[path = "../domain/mod.rs"]

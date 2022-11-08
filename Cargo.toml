@@ -1,16 +1,15 @@
 [workspace]
-
 members = [
-    "backend",
-    "frontend",
+    # Full stack.
+    "crates/backend",
+    "crates/frontend",
+    "crates/common",
 
-    #Internal
-    "common"
+    # Utils.
+    "crates/logger",
 ]
 
-default-members = [
-  "backend",
-]
+default-members = ["crates/backend", "crates/frontend", "crates/logger"]
 
 [profile.release]
 lto = true

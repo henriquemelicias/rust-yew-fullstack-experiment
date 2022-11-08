@@ -8,3 +8,6 @@ name = "backend"
 path = "src/bin/main.rs"
 
 [dependencies]
+color-eyre = "0.6"
+tracing = "0.1"
+tokio = { version = "1.21", features = ["rt-multi-thread", "macros"] }

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="434168a5-6cb4-4fa4-bc1f-64cda332b377" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/build.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/logger/base.dev.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/backend/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/backend/src/app/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/backend/src/app/routes/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/backend/src/bin/main.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/backend/src/domain/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/backend/src/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/backend/src/services/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/common/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/common/src/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/frontend/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/frontend/src/app/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/frontend/src/bin/main.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/frontend/src/domain/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/frontend/src/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/logger/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/logger/src/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/logger/src/main.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/prefix.log.2022-10-16-00" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/photo-story.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/photo-story.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/routes/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/bin/main.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/domain/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/drivers/database/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/drivers/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/lib.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/services/controllers/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/services/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/services/validators/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/lib.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/layout/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/views/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/bin/main.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/domain/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/drivers/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/lib.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/services/mod.rs" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="iwd4pwbu" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2G8o3jyohx707UJaOfJrGSpZ3rw" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/home/henry/Programming/Projects/Rust/custom-rustfmt/rustfmt",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/crates/logger/src/services" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Cargo.Run logger">
+    <configuration name="Run logger" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package logger --bin logger" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="rustfmt" type="ShConfigurationType">
+      <option name="SCRIPT_TEXT" value="find -type f -not -path &quot;*/[@.]*&quot; -not -path &quot;*/target/*&quot; -not -path &quot;*/vendor/*&quot; -path &quot;*.rs&quot; | xargs ./rustfmt " />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/sh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="false" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Cargo.Run logger" />
+      <item itemvalue="Shell Script.rustfmt" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Cargo.Run logger" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="externalLinter" value="Clippy" />
+    <option name="runExternalLinterOnTheFly" value="true" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.local/share/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin" />
+    <option name="version" value="2" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="434168a5-6cb4-4fa4-bc1f-64cda332b377" name="Changes" comment="" />
+      <created>1665779374887</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1665779374887</updated>
+      <workItem from="1665779377770" duration="21565000" />
+      <workItem from="1665939463740" duration="1926000" />
+      <workItem from="1665948877386" duration="5259000" />
+      <workItem from="1667557952094" duration="139000" />
+      <workItem from="1667558099455" duration="1061000" />
+      <workItem from="1667559177747" duration="2093000" />
+      <workItem from="1667561287740" duration="6807000" />
+      <workItem from="1667872840573" duration="2517000" />
+      <workItem from="1667875379954" duration="865000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
