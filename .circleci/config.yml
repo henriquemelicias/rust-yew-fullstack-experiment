@@ -6,6 +6,7 @@ jobs:
       - checkout
       - run: cargo version
       - run: rustup toolchain install nightly-2022-06-30
+      - run: cargo vendor
       - run: cargo clippy --fix --allow-dirty --allow-staged
       - run: cargo test
       - run: mkdir test-results

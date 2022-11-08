@@ -1,10 +1,10 @@
+use figment::providers::Env;
 use figment::{
     providers::{Format, Toml},
     Figment,
 };
 use serde::Deserialize;
-use std::{env};
-use figment::providers::Env;
+use std::env;
 use tracing::{debug, debug_span, info, info_span};
 
 #[derive(Deserialize)]
@@ -21,21 +21,21 @@ pub enum LogConfig
     OpenTelemetry,
 }
 
-fn main( )
+fn main()
 {
     // Set environment type env variable.
     let environment_type = if cfg!( debug_assertions ) { "dev" } else { "prod" };
     env::set_var( "ENVIRONMENT_TYPE", environment_type );
 
     let configs_path = std::path::PathBuf::from( "./configs/logger/" );
-    let app_name = env!("CARGO_PKG_NAME").to_string().to_uppercase();
+    let app_name = env!( "CARGO_PKG_NAME" ).to_string().to_uppercase();
 
     // Load app config variables.
     let _app_config = Figment::new()
         .merge( Toml::file( configs_path.join( "base.dev.toml" ) ) )
         .merge( Toml::file( configs_path.join( "base.prod.toml" ) ).profile( "prod" ) )
         .select( figment::Profile::from_env_or( "ENVIRONMENT_TYPE", "dev" ) )
-        .merge( Env::prefixed(format!("{}_", app_name).as_str() ) )
+        .merge( Env::prefixed( format!( "{}_", app_name ).as_str() ) )
         .extract::<AppConfig>()
         .expect( "Failed to load app config" );
 
