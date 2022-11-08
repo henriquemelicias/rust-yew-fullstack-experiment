@@ -5,5 +5,5 @@
 #[path = "../domain/mod.rs"]
 mod domain;
 
-#[path = "../drivers/mod.rs"]
+#[path = "../infrastructure/mod.rs"]
 mod drivers;

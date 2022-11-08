@@ -3,7 +3,7 @@ use figment::{
     Figment,
 };
 use serde::Deserialize;
-use std::{env, fs, io};
+use std::{env};
 use figment::providers::Env;
 use tracing::{debug, debug_span, info, info_span};
 
@@ -31,7 +31,7 @@ fn main( )
     let app_name = env!("CARGO_PKG_NAME").to_string().to_uppercase();
 
     // Load app config variables.
-    let app_config = Figment::new()
+    let _app_config = Figment::new()
         .merge( Toml::file( configs_path.join( "base.dev.toml" ) ) )
         .merge( Toml::file( configs_path.join( "base.prod.toml" ) ).profile( "prod" ) )
         .select( figment::Profile::from_env_or( "ENVIRONMENT_TYPE", "dev" ) )
