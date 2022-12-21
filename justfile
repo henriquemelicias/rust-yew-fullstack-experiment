@@ -20,13 +20,13 @@ rustfmt:
 vendor:
     cargo vendor
 
+# Make .githooks this project hook lookup directory.
+init-git-hooks:
+    git config core.hooksPath .githooks
+
 # Build docker.
 docker-build:
     docker build -t photo-story:distroless -f Dockerfile .
-
-# Run docker.
-docker-run:
-    docker run -ti photo-story:distroless ./monitoring
 
 # Docker compose up.
 docker-compose-up:
