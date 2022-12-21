@@ -4,7 +4,6 @@ jobs:
       - image: cimg/rust:1.65.0
     steps:
       - checkout
-      - run: rm -r ./.cargo
       - run: cargo version
       - run: rustup toolchain install nightly
       - run: cargo build
