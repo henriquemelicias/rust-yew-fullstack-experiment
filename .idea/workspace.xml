@@ -16,47 +16,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="434168a5-6cb4-4fa4-bc1f-64cda332b377" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/diagrams/architecture.component_diagram.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/diagrams/architecture.component_diagram.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/docker-compose.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/logger.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/common/src/settings.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/monitoring/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/monitoring/src/logger.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/monitoring/src/main.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/monitoring/src/prometheus.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monitoring/alertmanager/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monitoring/prometheus/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monitoring/prometheus/rules.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/monitoring/setup_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/.cargo/config.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/photo-story.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/photo-story.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/logger/base.dev.toml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/general.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/logger/base.prod.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/common/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/crates/common/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/common/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/common/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/frontend/src/app/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/frontend/src/domain/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/frontend/src/domain/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/frontend/src/infrastructure/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/frontend/src/infrastructure/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/frontend/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/frontend/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/frontend/src/ui/layout/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/frontend/src/ui/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/frontend/src/ui/views/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/logger/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/crates/monitoring/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/logger/src/app/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/logger/src/app/tracing_layer.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/logger/src/lib.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/logger/src/main.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/justfile" beforeDir="false" afterPath="$PROJECT_DIR$/justfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/prefix.log.2022-10-16-00" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rust-toolchain.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rust-toolchain.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rustfmt.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rustfmt.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitsecret/paths/mapping.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/.gitsecret/paths/mapping.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monitoring/alertmanager/secret.config.yml.secret" beforeDir="false" afterPath="$PROJECT_DIR$/monitoring/alertmanager/secret.config.yml.secret" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +186,7 @@
       <workItem from="1671398844655" duration="1724000" />
       <workItem from="1671454105122" duration="8039000" />
       <workItem from="1671542336592" duration="7712000" />
-      <workItem from="1671619846935" duration="303000" />
+      <workItem from="1671619846935" duration="904000" />
     </task>
     <servers />
   </component>
