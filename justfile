@@ -20,7 +20,7 @@ rustfmt:
 vendor:
     cargo vendor
 
-# Make .githooks this project hook lookup directory.
+# Make .githooks this project hooks lookup directory.
 init-git-hooks:
     git config core.hooksPath .githooks
 

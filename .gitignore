@@ -18,7 +18,7 @@ Cargo.lock
 
 # Grafana data.
 /monitoring/grafana/data/*
-!/monitoring/grafna/data/.gitkeep
+!/monitoring/grafana/data/.gitkeep
 
 # Git secret files.
 .gitsecret/keys/random_seed
