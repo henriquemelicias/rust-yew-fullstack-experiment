@@ -6,4 +6,5 @@ spaces_within_parenthesized_items = true
 max_width = 120
 enum_discrim_align_threshold = 20
 struct_field_align_threshold = 20
+imports_granularity = "Crate"
 use_small_heuristics = "Default"

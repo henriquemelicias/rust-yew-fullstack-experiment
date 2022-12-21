@@ -16,53 +16,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="434168a5-6cb4-4fa4-bc1f-64cda332b377" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/build.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/configs/logger/base.dev.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/backend/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/backend/src/app/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/backend/src/app/routes/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/backend/src/bin/main.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/backend/src/domain/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/backend/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/backend/src/services/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/common/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/common/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/frontend/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/frontend/src/app/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/frontend/src/bin/main.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/frontend/src/domain/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/frontend/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/logger/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/logger/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/logger/src/main.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/logs/prefix.log.2022-10-16-00" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/diagrams/architecture.component_diagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/diagrams/architecture.component_diagram.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/docker-compose.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configs/logger.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/common/src/settings.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/monitoring/src/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/monitoring/src/logger.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/monitoring/src/main.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/monitoring/src/prometheus.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monitoring/alertmanager/config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monitoring/prometheus/config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monitoring/prometheus/rules.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monitoring/setup_guide.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cargo/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/.cargo/config.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/photo-story.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/photo-story.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Cargo.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/app/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/app/routes/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/bin/main.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/domain/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/drivers/database/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/drivers/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/lib.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/services/controllers/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/services/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/services/validators/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/Cargo.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/lib.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/Cargo.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/layout/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/views/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/bin/main.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/domain/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/drivers/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/lib.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/services/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/logger/base.dev.toml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/general.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/logger/base.prod.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/common/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/crates/common/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/common/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/common/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/frontend/src/app/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/frontend/src/domain/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/frontend/src/domain/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/frontend/src/infrastructure/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/frontend/src/infrastructure/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/frontend/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/frontend/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/frontend/src/ui/layout/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/frontend/src/ui/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/frontend/src/ui/views/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/logger/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/crates/monitoring/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/logger/src/app/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/logger/src/app/tracing_layer.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/logger/src/lib.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/logger/src/main.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/justfile" beforeDir="false" afterPath="$PROJECT_DIR$/justfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/prefix.log.2022-10-16-00" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rust-toolchain.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rust-toolchain.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rustfmt.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rustfmt.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +76,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/crates/monitoring/src/main.rs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="iwd4pwbu" />
   </component>
@@ -96,31 +93,59 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "last_opened_file_path": "/home/henry/Programming/Projects/Rust/custom-rustfmt/rustfmt",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/henry/Programming/Projects/Rust/photo-story&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;language.rust.cargo.check&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/crates/common/src" />
+      <recent name="$PROJECT_DIR$/crates/settings/src" />
+      <recent name="$PROJECT_DIR$/crates/settings" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/crates/settings/src" />
+      <recent name="$PROJECT_DIR$/configs" />
       <recent name="$PROJECT_DIR$/crates/logger/src/services" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Run logger">
+  <component name="RunManager" selected="Cargo.Run monitoring">
     <configuration name="Run logger" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package logger --bin logger" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run monitoring" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package monitoring --bin monitoring" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -152,11 +177,13 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Cargo.Run monitoring" />
       <item itemvalue="Cargo.Run logger" />
       <item itemvalue="Shell Script.rustfmt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Run monitoring" />
         <item itemvalue="Cargo.Run logger" />
       </list>
     </recent_temporary>
@@ -184,6 +211,21 @@
       <workItem from="1667561287740" duration="6807000" />
       <workItem from="1667872840573" duration="2517000" />
       <workItem from="1667875379954" duration="865000" />
+      <workItem from="1668697483981" duration="16000" />
+      <workItem from="1669195340884" duration="39000" />
+      <workItem from="1669195392139" duration="36988000" />
+      <workItem from="1669286393114" duration="1001000" />
+      <workItem from="1669314507472" duration="643000" />
+      <workItem from="1669325145348" duration="1818000" />
+      <workItem from="1669616970604" duration="307000" />
+      <workItem from="1671383271078" duration="218000" />
+      <workItem from="1671383510606" duration="5683000" />
+      <workItem from="1671389218690" duration="135000" />
+      <workItem from="1671389439249" duration="4575000" />
+      <workItem from="1671398844655" duration="1724000" />
+      <workItem from="1671454105122" duration="8039000" />
+      <workItem from="1671542336592" duration="7712000" />
+      <workItem from="1671619846935" duration="303000" />
     </task>
     <servers />
   </component>

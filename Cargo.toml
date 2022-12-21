@@ -6,10 +6,10 @@ members = [
     "crates/common",
 
     # Utils.
-    "crates/logger",
+    "crates/monitoring",
 ]
 
-default-members = ["crates/backend", "crates/frontend", "crates/logger"]
+default-members = ["crates/backend", "crates/frontend", "crates/monitoring"]
 
 [profile.release]
 lto = true

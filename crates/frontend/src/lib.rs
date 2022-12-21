@@ -4,4 +4,4 @@
 #![warn( clippy::complexity )]
 #![warn( clippy::perf )]
 
-pub(crate) mod app;
+pub(crate) mod presentation;

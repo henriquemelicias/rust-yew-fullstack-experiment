@@ -20,6 +20,22 @@ rustfmt:
 vendor:
     cargo vendor
 
+# Build docker.
+docker-build:
+    docker build -t photo-story:distroless -f Dockerfile .
+
+# Run docker.
+docker-run:
+    docker run -ti photo-story:distroless ./monitoring
+
+# Docker compose up.
+docker-compose-up:
+    docker-compose up
+
+# Docker compose down.
+docker-compose-down:
+    docker-compose down
+
 # Runs all tests.
 test-all:
     cargo test --locked

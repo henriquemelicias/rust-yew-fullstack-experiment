@@ -1,0 +1,121 @@
+@startuml
+' ######################
+'  PRESENTATION PACKAGE
+' ######################
+
+package "Presentation Layer" as presentationP {
+
+    package "by_features" as presentationP_byFeaturesP {
+
+        package "feature A" as presentationP_byFeaturesP_featureAP {
+            [views] as presentationP_byFeaturesP_featureAP_views
+            [models] as presentationP_byFeaturesP_featureAP_models
+            [etc...] as presentationP_byFeaturesP_featureAP_etc
+        }
+
+        [feature B] as presentationP_byFeaturesP_featureB
+        [feature C] as presentationP_byFeaturesP_featureC        
+        [module A] as presentationP_byFeaturesP_moduleA
+     
+    } 
+
+    [layout] as presentationP_layout
+    [theme] as presentationP_theme
+    [routes] as presentationP_routes
+}
+
+' ##################
+'  FEATURES PACKAGE
+' ##################
+
+package "Features Layer" as featuresP {
+    package "feature A" as featuresP_featureAP {
+        [use_cases] as featuresP_featureAP_useCases
+        [contracts] as featuresP_featuresAP_contracts
+        [services] as featuresP_featuresAP_services
+        [etc...] as featuresP_featuresAP_etc
+    }
+    [feature B] as featuresP_featureB
+    [feature C] as featuresP_featureC
+    
+    package "Module A" as featuresP_moduleAP {
+        [shared] as featuresP_moduleAP_shared
+        [feature D] as featuresP_moduleAP_featureD
+        [feature E] as featuresP_moduleAP_featureE
+    }
+}
+
+' ########################
+'  INFRASTRUCTURE PACKAGE
+' ########################
+
+package "Infrastructure Layer" as infrastructureP {
+
+    package infrastructureP_byFeaturesP as "by_features" {
+
+        package "feature A" as infrastructureP_byFeaturesP_featureAP {
+            [remote] as infrastructureP_byFeaturesP_featureAP_remote
+            [local] as infrastructureP_byFeaturesP_featureAP_local
+            [etc...] as infrastructureP_byFeaturesP_featureAP_etc
+        }
+
+        [feature B] as infrastructureP_byFeaturesP_featureB
+        [feature C] as infrastructureP_byFeaturesP_featureC
+    } 
+
+    [remote] as infrastructureP_remote
+    [local] as infrastructureP_local
+    [database] as infrastructureP_database
+}
+
+' ################
+'  DOMAIN PACKAGE
+' ################
+
+package "Domain Layer" as domainP {
+
+    package "by_features" as domainP_byFeaturesP {
+
+            package "feature A" as domainP_byFeaturesP_featureAP {
+                [constants] as domainP_byFeaturesP_featureAP_constants
+                [enums] as domainP_byFeaturesP_featureAP_enums
+                [utils] as domainP_byFeaturesP_featureAP_utils
+                [etc...] as domainP_byFeaturesP_featureAP_etc
+         }
+        [feature B] as domainP_byFeaturesP_featureB
+        [feature C] as domainP_byFeaturesP_featureC
+
+        package "module A" as domainP_byFeaturesP_moduleAP {
+            [constants] as domainP_byFeaturesP_moduleAP_constants
+            [enums] as domainP_byFeaturesP_moduleAP_enums
+            [utils] as domainP_byFeaturesP_moduleAP_utils
+            [etc...] as domainP_byFeaturesP_moduleAP_etc
+        }
+    }
+
+    [constants] as domainP_constants
+    [enums] as domainP_enums
+    [utils] as domainP_utils
+    [etc...] as domainP_etc
+}
+
+' ###########################
+'  PRESENTATION <-> FEATURES
+' ###########################
+
+presentationP ----> featuresP
+
+' #############################
+'  FEATURES <-> INFRASTRUCTURE
+' #############################
+
+featuresP --> infrastructureP
+
+
+' #####################
+'  FEATURES <-> DOMAIN
+' ######################
+
+featuresP ----> domainP
+
+@enduml

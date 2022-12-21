@@ -5,7 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/crates/backend/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/common/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/frontend/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/crates/logger/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/settings/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/monitoring/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
