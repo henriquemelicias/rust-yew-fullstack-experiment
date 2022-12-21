@@ -1,4 +1,4 @@
- groups:
+groups:
 - name: default
   rules:
   - alert: SseClients
@@ -8,3 +8,4 @@
       severity: high
     annotations:
       summary: Too many SSE clients
+

@@ -63,7 +63,7 @@ services:
     volumes:
       - ./monitoring/alertmanager:/etc/alertmanager
     command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--config.file=/etc/alertmanager/secret.config.yml'
       - '--web.external-url=http://localhost:9093'
     networks:
       - local
