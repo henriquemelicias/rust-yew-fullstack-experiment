@@ -66,3 +66,13 @@ jobs:
       - save-sccache-cache
       - store_test_results:
           path: test-results
+
+workflows:
+  version: 2
+
+  test:
+    jobs:
+      - rust-toolchain-install
+      - rust-tests:
+          requires:
+            - rust-toolchain-install
