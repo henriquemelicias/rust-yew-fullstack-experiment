@@ -56,7 +56,6 @@ jobs:
     executor: default
     steps:
       - checkout
-      - rust-toolchain-install
       - setup-sccache
       - restore-sccache-cache
       - run: mkdir test-results
