@@ -1,14 +1,92 @@
-jobs:
-  build:
+version: 2.1
+
+executors:
+  default:
     docker:
-      - image: cimg/rust:latest
+      - image: cimg/rust:1.65.0
+
+commands:
+  setup-sccache:
+    steps:
+      - run:
+          name: Install sccache
+          command: |
+            cargo install sccache
+            # This configures Rust to use sccache.
+            echo 'export "RUSTC_WRAPPER"="sccache"' >> $BASH_ENV
+            # This is the maximum space sccache cache will use on disk.
+            echo 'export "SCCACHE_CACHE_SIZE"="1G"' >> $BASH_ENV
+            sccache --version
+  save-sccache-cache:
+    parameters:
+      path:
+        type: string
+        default: "~/.cache/sccache"
+    steps:
+      - save_cache:
+          name: Save sccache cache
+          # We only upload a new cache if our Cargo.lock changed
+          # otherwise, we use the exact same key which won't upload a new cache
+          key: sccache-cache-stable-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "Cargo.lock" }}
+          paths:
+            - <<parameters.path>>
+      - sccache-stats-and-logs
+  restore-sccache-cache:
+    steps:
+      - restore_cache:
+          name: Restore sccache cache
+          keys: 
+          # We have multiple keys to increase the chance of a cache hit
+          # in case the Cargo.lock is updated, we still want to retrieve
+          # some cache
+            - sccache-cache-stable-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "Cargo.lock" }}
+            - sccache-cache-stable-{{ arch }}-{{ .Environment.CIRCLE_JOB }}
+            - sccache-cache-stable-{{ arch }}
+
+jobs:
+  rust-toolchain-install:
+    executor: default
     steps:
       - checkout
-      - run: cargo version
-      - run: rustup toolchain install nightly-2022-06-30
-      - run: cargo vendor
+      - restore_cache:
+          keys:
+            - cargo-v0-{{ checksum "rust-toolchain" }}-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}-{{ arch }}
+      - run: rustup install nightly
+      - save_cache:
+          key: cargo-v0-{{ checksum "rust-toolchain" }}-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}-{{ arch }}
+          paths:
+            - "~/.cargo"
+            - "~/.rustup"
+
+  rust-build:
+    executor: default
+    steps:
+      - checkout
+      - setup-sccache
+      - restore-sccache-cache
+      - run: cargo build
       - run: cargo clippy --fix --allow-dirty --allow-staged
-      - run: cargo test
+      - save-sccache-cache
+
+  rust-test:
+    executor: default
+    steps:
+      - checkout
       - run: mkdir test-results
+      - run: cargo test
       - store_test_results:
           path: test-results
+
+
+workflows:
+  version: 2
+
+  test:
+    jobs:
+      - rust-toolchain-install
+      - rust-build:
+          requires:
+            - rust-toolchain-install
+      - rust-test:
+          requires:
+            - rust-build
