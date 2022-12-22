@@ -6,6 +6,7 @@
 
 // Modules.
 pub(crate) mod app;
+pub(crate) mod settings;
 
 // Crate use re-exports.
 pub use color_eyre::eyre::Result;

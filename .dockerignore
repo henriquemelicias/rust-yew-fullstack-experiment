@@ -1,6 +1,7 @@
 assets
 Dockerfile*
 docker-compose*
+.cargo
 .dockerignore
 .git
 .gitignore

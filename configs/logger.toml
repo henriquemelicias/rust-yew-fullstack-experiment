@@ -1,5 +1,0 @@
-[default] # also for debug
-test = "hecking"
-
-[production]
-test = "hecking2"

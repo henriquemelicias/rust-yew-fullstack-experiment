@@ -8,17 +8,14 @@ RUN update-ca-certificates
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --assume-yes \
-      protobuf-compiler \
-      clang
+        clang
 
 ENV CARGO_TERM_COLOR always
 
 WORKDIR /photo-story
 COPY ./ .
-RUN mv ./.cargo/mold /usr/bin/
 
 # Cache dependencies.
-RUN apt install -y protobuf-compiler
 
 RUN cargo build --release
 
@@ -34,8 +31,8 @@ COPY --from=builder /etc/group /etc/group
 WORKDIR /photo-story
 
 # Copy binaries.
-COPY --from=builder /photo-story/target/release/monitoring ./
+COPY --from=builder /photo-story/target/release/backend ./
 
 EXPOSE 9000
 
-CMD ["./monitoring"]
+CMD ["./backend"]

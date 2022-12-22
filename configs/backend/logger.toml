@@ -1,0 +1,11 @@
+[default]
+log_level = "info"
+is_stdout_emitted = true
+is_file_emitted = true
+logs_directory = "./logs"
+
+[production]
+log_level = "info"
+is_stdout_emitted = true
+is_file_emitted = true
+logs_directory = "./logs"
