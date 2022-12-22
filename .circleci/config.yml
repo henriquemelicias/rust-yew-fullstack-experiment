@@ -5,6 +5,15 @@ executors:
     docker:
       - image: circleci/rust:latest
 
+restore-workspace: &restore-workspace
+  attach_workspace:
+    at: ~/
+restore-cache: &restore-cache
+  restore_cache:
+    keys:
+      - cargo-v0-{{ checksum "rust-toolchain" }}-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}-{{ arch }}
+      - repo-source-{{ .Branch }}-{{ .Revision }}
+
 commands:
   setup-sccache:
     steps:
@@ -40,14 +49,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - cargo-v0-{{ checksum "rust-toolchain" }}
+            - cargo-v0-{{ checksum "rust-toolchain" }}-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}-{{ arch }}
       - run: rustup install nightly
       - persist_to_workspace:
           root: ~/
           paths:
-            - gpuci
+            - project
       - save_cache:
-          key: cargo-v0-{{ checksum "rust-toolchain" }}
+          key: cargo-v0-{{ checksum "rust-toolchain" }}-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}-{{ arch }}
           paths:
             - "~/.cargo"
             - "~/.rustup"
