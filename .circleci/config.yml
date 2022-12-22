@@ -30,7 +30,6 @@ commands:
           key: sccache-cache-stable-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "Cargo.lock" }}
           paths:
             - <<parameters.path>>
-      - sccache-stats-and-logs
   restore-sccache-cache:
     steps:
       - restore_cache:
