@@ -34,7 +34,7 @@ commands:
           paths:
             - "~/.cache/sccache"  
 jobs:
-  rust_toolchain_install:
+  rust-toolchain-install:
     executor: default
     steps:
       - checkout
