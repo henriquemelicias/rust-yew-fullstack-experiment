@@ -47,14 +47,14 @@ jobs:
     executor: default
     steps:
       - checkout
-        #- restore_cache:
-        #  keys:
-        #   - cargo-v0-{{ checksum "rust-toolchain.toml" }}-{{ checksum "Cargo.toml" }}-{{ arch }}
+      - restore_cache:
+          keys:
+            - cargo-v0-{{ checksum "rust-toolchain.toml" }}-{{ checksum "Cargo.toml" }-{{ arch }}
       - run: rustup install nightly
-        #- save_cache:
-        #  key: cargo-v0-{{ checksum "rust-toolchain.toml" }}-{{ checksum "Cargo.toml" }}-{{ arch }}
-        #  paths:
-        #    - "~/"
+      - save_cache:
+          key: cargo-v0-{{ checksum "rust-toolchain.toml" }}-{{ checksum "Cargo.toml" }}-{{ arch }}
+          paths:
+            - "~/.rustup"
 
   mold-linker-install:
     executor: default
@@ -72,7 +72,7 @@ jobs:
       - save_cache:
           key: mold-linker-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
           paths:
-            - "~/"
+            - "/usr/local/bin/mold"
 
   rust-build:
     executor: default
