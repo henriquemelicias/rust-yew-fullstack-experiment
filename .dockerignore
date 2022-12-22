@@ -1,7 +1,6 @@
 assets
 Dockerfile*
 docker-compose*
-.cargo
 .dockerignore
 .git
 .gitignore
@@ -15,3 +14,4 @@ LICENSE
 rustfmt
 rustfmt.toml
 target
+vendor

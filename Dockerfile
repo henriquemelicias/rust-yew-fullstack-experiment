@@ -6,7 +6,7 @@ FROM rust:latest AS builder
 RUN update-ca-certificates
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive \
+    && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --assume-yes \
         clang
 
@@ -16,6 +16,12 @@ WORKDIR /photo-story
 COPY ./ .
 
 # Cache dependencies.
+RUN git clone https://github.com/rui314/mold.git \
+    && mkdir ./mold/build \
+    &&./mold/install-build-deps.sh \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ ./mold/ -B ./mold/build \
+    && cmake --build ./mold/build -j $(nproc) \
+    && cmake --install ./mold/build
 
 RUN cargo build --release
 
@@ -24,11 +30,10 @@ RUN cargo build --release
 # -------------------------- #
 FROM gcr.io/distroless/cc
 
-# Import builder.
-COPY --from=builder /etc/passwd /etc/passwd
-COPY --from=builder /etc/group /etc/group
-
 WORKDIR /photo-story
+
+# Copy directories.
+COPY --from=builder /photo-story/configs ./
 
 # Copy binaries.
 COPY --from=builder /photo-story/target/release/backend ./

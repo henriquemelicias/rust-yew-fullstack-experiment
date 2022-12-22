@@ -9,7 +9,6 @@ Cargo.lock
 **/*.rs.bk
 
 # Personal directories.
-.cargo/
 .idea/
 
 # Logs data.

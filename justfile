@@ -48,15 +48,13 @@ install-loki-docker-driver:
 
 # Install mold linker for faster builds.
 install-mold-linker:
+    rm -rf mold
     git clone https://github.com/rui314/mold.git
-    mkdir mold/build
-    cd mold/build
-    git checkout v1.7.1
-    ../install-build-deps.sh
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ ..
-    cmake --build . -j $(nproc)
-    sudo cmake --install .
-    cd ../..
+    mkdir ./mold/build
+    sudo ./mold/install-build-deps.sh
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ ./mold/ -B ./mold/build
+    cmake --build ./mold/build/ -j $(nproc)
+    sudo cmake --install ./mold/build/
     rm -rf mold
 
 # Format using custom rustfmt.
