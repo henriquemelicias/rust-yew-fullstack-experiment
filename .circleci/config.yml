@@ -49,7 +49,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - cargo-v0-{{ checksum "rust-toolchain.toml" }}-{{ checksum "Cargo.toml" }-{{ arch }}
+            - cargo-v0-{{ checksum "rust-toolchain.toml" }}-{{ checksum "Cargo.toml" }}-{{ arch }}
       - run: rustup install nightly
       - save_cache:
           key: cargo-v0-{{ checksum "rust-toolchain.toml" }}-{{ checksum "Cargo.toml" }}-{{ arch }}
@@ -64,7 +64,7 @@ jobs:
           keys:
             - mold-linker-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
       - run: wget https://github.com/rui314/mold/releases/download/v1.7.1/mold-1.7.1-x86_64-linux.tar.gz
-      - run: untar mold*
+      - run: tar -xzf mold*
       - run: mv ./mold*/* /usr/local/
       - save_cache:
           key: mold-linker-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
