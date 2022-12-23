@@ -8,9 +8,10 @@
 //! use lazy_static::lazy_static;
 //! use monitoring::prometheus;
 //! use monitoring::prometheus::metrics;
+//! use prometheus::Registry;
 //!
 //! lazy_static! {
-//!    pub static ref REGISTRY: prometheus::Registry = prometheus::Registry::new();//!
+//!    pub static ref REGISTRY: prometheus::Registry = prometheus::Registry::new();
 //! }
 //!
 //! prometheus::add_metrics_to_registry(
