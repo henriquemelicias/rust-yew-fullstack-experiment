@@ -6,6 +6,26 @@ executors:
       - image: cimg/rust:1.65.0
 
 commands:
+  rust-toolchain-install:
+    steps:
+      - run: rustup install nightly
+
+  mold-linker-install:
+    steps:
+      - restore_cache:
+          keys:
+            - mold-linker-v0-{{ checksum "rust-toolchain.toml" }}-{{ arch }}
+      - run: wget https://github.com/rui314/mold/releases/download/v1.7.1/mold-1.7.1-x86_64-linux.tar.gz
+      - run: tar -xzf mold*
+      - run: sudo cp -r ./mold*/* /usr/local/
+      - run: sudo ls /usr/local/bin
+      - save_cache:
+          key: mold-linker-v0-{{ checksum "rust-toolchain.toml" }}-{{ arch }}
+          paths:
+            - "/usr/local/bin/mold"
+            - "/usr/local/lib/mold"
+            - "/usr/local/libexec/mold"
+
   setup-sccache:
     steps:
       - run:
@@ -43,65 +63,22 @@ commands:
             - sccache-cache-stable-{{ arch }}
 
 jobs:
-  rust-toolchain-install:
-    executor: default
-    steps:
-      - checkout
-      - run: rustup install nightly
-      - run: sudo ls -la ~/
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - './.rustup'
-
-  mold-linker-install:
-    executor: default
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - mold-linker-v0-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
-      - run: wget https://github.com/rui314/mold/releases/download/v1.7.1/mold-1.7.1-x86_64-linux.tar.gz
-      - run: tar -xzf mold*
-      - run: sudo cp -r ./mold*/* /usr/local/
-      - run: sudo ls /usr/local/bin
-      - save_cache:
-          key: mold-linker-v0-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
-          paths:
-            - "/usr/local/bin/mold"
-            - "/usr/local/lib/mold"
-            - "/usr/local/libexec/mold"
-      - persist_to_workspace:
-          root: /usr/local/
-          paths:
-            - "./bin/mold"
-            - "./lib/mold"
-            - "./libexec/mold"
-
-  rust-build:
+  rust-test:
     executor: default
     steps:
       - checkout
       - run:
           name: Apt get stuff
           command: sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
-      - attach_workspace:
-            at: /tmp/workspace
-      - run: sudo ls -la /tmp/workspace
-      - run: sudo cp -r /tmp/workspace/mold /usr/local/
-      - run: sudo ls /usr/local/bin
+      - rust-toolchain-install
+      - mold-linker-install
         #- setup-sccache
         #- restore-sccache-cache
       - run: cargo build
       - run: cargo clippy --fix --allow-dirty --allow-staged
-        #- save-sccache-cache
-
-  rust-test:
-    executor: default
-    steps:
-      - checkout
       - run: mkdir test-results
       - run: cargo test
+        #- save-sccache-cache
       - store_test_results:
           path: test-results
 
@@ -110,12 +87,4 @@ workflows:
 
   test:
     jobs:
-      - rust-toolchain-install
-      - mold-linker-install
-      - rust-build:
-          requires:
-            - rust-toolchain-install
-            - mold-linker-install
-      - rust-test:
-          requires:
-            - rust-build
+      - rust-test
