@@ -48,6 +48,7 @@ jobs:
     steps:
       - checkout
       - run: rustup install nightly
+      - run: sudo ls -la .
       - persist_to_workspace:
           root: .
           paths:
@@ -86,8 +87,8 @@ jobs:
           command: sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
       - attach_workspace:
             at: /tmp/workspace
-      - run: sudo ls /tmp/workspace
-      - run: sudo cp -r /tmp/workspace/usr/local/* /usr/local/
+      - run: sudo ls -la /tmp/workspace
+      - run: sudo cp -r /tmp/workspace/mold /usr/local/
       - run: sudo ls /usr/local/bin
         #- setup-sccache
         #- restore-sccache-cache
