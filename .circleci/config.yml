@@ -43,6 +43,12 @@ commands:
             - sccache-cache-stable-{{ arch }}
 
 jobs:
+  install-system-deps:
+    executor: default
+    steps:
+      - run:
+          name: Apt get stuff
+          command: sudo apt install -y clang
   rust-toolchain-install:
     executor: default
     steps:
@@ -70,11 +76,11 @@ jobs:
     executor: default
     steps:
       - checkout
-      - setup-sccache
-      - restore-sccache-cache
+        #- setup-sccache
+        #- restore-sccache-cache
       - run: cargo build
       - run: cargo clippy --fix --allow-dirty --allow-staged
-      - save-sccache-cache
+        #- save-sccache-cache
 
   rust-test:
     executor: default
@@ -90,12 +96,13 @@ workflows:
 
   test:
     jobs:
+      - install-system-deps
       - rust-toolchain-install
-      - mold-linker-install:
-          requires:
-            - rust-toolchain-install
+      - mold-linker-install
       - rust-build:
           requires:
+            - install-system-deps
+            - rust-toolchain-install
             - mold-linker-install
       - rust-test:
           requires:
