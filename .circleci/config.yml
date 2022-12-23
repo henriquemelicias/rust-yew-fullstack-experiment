@@ -83,7 +83,9 @@ jobs:
       - persist_to_workspace:
           root: /usr/local/
           paths:
-            - '*'
+            - "./bin/mold"
+            - "./lib/mold"
+            - "./libexec/mold"
 
   rust-build:
     executor: default
@@ -111,12 +113,12 @@ workflows:
 
   test:
     jobs:
-      - install-system-deps
+      #- install-system-deps
       - rust-toolchain-install
       - mold-linker-install
       - rust-build:
           requires:
-            - install-system-deps
+            #- install-system-deps
             - rust-toolchain-install
             - mold-linker-install
       - rust-test:
