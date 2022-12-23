@@ -61,12 +61,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - mold-linker-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
+            - mold-linker-v0-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
       - run: wget https://github.com/rui314/mold/releases/download/v1.7.1/mold-1.7.1-x86_64-linux.tar.gz
       - run: tar -xzf mold*
       - run: sudo cp -r ./mold*/* /usr/local/
+      - run: sudo ls /usr/local/bin
       - save_cache:
-          key: mold-linker-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
+          key: mold-linker-v0-{{ checksum "/usr/local/bin/mold" }}-{{ arch }}
           paths:
             - "/usr/local/bin/mold"
             - "/usr/local/lib/mold"
