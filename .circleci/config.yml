@@ -85,7 +85,7 @@ jobs:
           name: Apt get stuff
           command: sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
       - attach_workspace:
-            at: .
+            at: /
       - run: sudo ls /usr/local/bin
         #- setup-sccache
         #- restore-sccache-cache
