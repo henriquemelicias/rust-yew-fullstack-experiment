@@ -50,9 +50,11 @@ jobs:
           name: Apt get stuff
           command: sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
       - persist_to_workspace:
-          root: /usr/
+          root: /usr
           paths:
-            - '*'
+            - "/bin/clang*"
+            - "/include/clang*"
+            - "/lib/clang*"
   rust-toolchain-install:
     executor: default
     steps:
@@ -92,7 +94,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-            at: "/"
+            at: .
         #- setup-sccache
         #- restore-sccache-cache
       - run: cargo build
@@ -113,12 +115,12 @@ workflows:
 
   test:
     jobs:
-      #- install-system-deps
+      - install-system-deps
       - rust-toolchain-install
       - mold-linker-install
       - rust-build:
           requires:
-            #- install-system-deps
+            - install-system-deps
             - rust-toolchain-install
             - mold-linker-install
       - rust-test:
