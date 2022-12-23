@@ -48,7 +48,7 @@ jobs:
     steps:
       - run:
           name: Apt get stuff
-          command: sudo apt install -y clang
+          command: sudo apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
   rust-toolchain-install:
     executor: default
     steps:
