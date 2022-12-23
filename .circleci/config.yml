@@ -81,7 +81,7 @@ jobs:
             - "/usr/local/lib/mold"
             - "/usr/local/libexec/mold"
       - persist_to_workspace:
-          root: .
+          root: /usr/local/
           paths:
             - '*'
 
