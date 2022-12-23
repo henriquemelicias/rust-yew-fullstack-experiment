@@ -48,11 +48,11 @@ jobs:
     steps:
       - checkout
       - run: rustup install nightly
-      - run: sudo ls -la .
+      - run: sudo ls -la ~/
       - persist_to_workspace:
-          root: .
+          root: ~/
           paths:
-            - '*'
+            - '.rustup'
 
   mold-linker-install:
     executor: default
