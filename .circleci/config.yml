@@ -92,7 +92,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-            at: .
+            at: "/"
         #- setup-sccache
         #- restore-sccache-cache
       - run: cargo build
