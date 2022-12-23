@@ -47,7 +47,6 @@ jobs:
     executor: default
     steps:
       - checkout
-      - run: rustup toolchain list
       - run: rustup install nightly
       - persist_to_workspace:
           root: .
@@ -87,6 +86,7 @@ jobs:
           command: sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
       - attach_workspace:
             at: .
+      - run: sudo ls /usr/local/bin
         #- setup-sccache
         #- restore-sccache-cache
       - run: cargo build
