@@ -5,6 +5,11 @@ FROM rust:latest AS builder
 
 RUN update-ca-certificates
 
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends --assume-yes \
+        clang
+
 ENV CARGO_TERM_COLOR always
 
 WORKDIR /photo-story

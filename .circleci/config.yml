@@ -50,11 +50,9 @@ jobs:
           name: Apt get stuff
           command: sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
       - persist_to_workspace:
-          root: /usr
+          root: /
           paths:
-            - "./bin/clang*"
-            - "./include/clang*"
-            - "./lib/clang*"
+            - "*"
   rust-toolchain-install:
     executor: default
     steps:
