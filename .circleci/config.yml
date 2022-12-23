@@ -49,11 +49,19 @@ jobs:
       - run:
           name: Apt get stuff
           command: sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
+      - persist_to_workspace:
+          root: .
+          paths:
+            - '*'
   rust-toolchain-install:
     executor: default
     steps:
       - checkout
       - run: rustup install nightly
+      - persist_to_workspace:
+          root: .
+          paths:
+            - '*'
 
   mold-linker-install:
     executor: default
@@ -72,11 +80,17 @@ jobs:
             - "/usr/local/bin/mold"
             - "/usr/local/lib/mold"
             - "/usr/local/libexec/mold"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - '*'
 
   rust-build:
     executor: default
     steps:
       - checkout
+      - attach_workspace:
+            at: .
         #- setup-sccache
         #- restore-sccache-cache
       - run: cargo build
