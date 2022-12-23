@@ -52,9 +52,9 @@ jobs:
       - persist_to_workspace:
           root: /usr
           paths:
-            - "/bin/clang*"
-            - "/include/clang*"
-            - "/lib/clang*"
+            - "./bin/clang*"
+            - "./include/clang*"
+            - "./lib/clang*"
   rust-toolchain-install:
     executor: default
     steps:
