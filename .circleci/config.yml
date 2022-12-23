@@ -50,7 +50,7 @@ jobs:
           name: Apt get stuff
           command: sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --assume-yes clang
       - persist_to_workspace:
-          root: .
+          root: /usr/
           paths:
             - '*'
   rust-toolchain-install:
