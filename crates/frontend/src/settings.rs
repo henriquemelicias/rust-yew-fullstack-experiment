@@ -1,22 +1,33 @@
-use common::settings::RunEnvironmentType;
-use figment::{
-    providers::{Env, Format, Toml},
-    Figment,
-};
+#![allow( clippy::ref_option_ref )]
+#![allow( unused )]
+
+use common::settings::{ImportFigment, RuntimeEnvironmentType};
+use derive_getters::Getters;
+use lazy_static::lazy_static;
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
-pub struct GeneralConfigs
-{
-    app_name: &'static str,
-    run_env:  RunEnvironmentType,
+lazy_static! {
+    pub static ref GENERAL: GeneralConfigs =
+        GeneralConfigs::import( "./logs/frontend/general.toml", "general_", None );
+    pub static ref LOGGER: LoggerConfigs = LoggerConfigs::import(
+        "./logs/frontend/logger.toml",
+        "logger_",
+        Some( GENERAL.default_run_env() )
+    );
 }
 
-#[derive(Debug, Deserialize)]
-pub struct LoggingConfigs
+#[derive(Debug, Deserialize, Getters)]
+pub struct GeneralConfigs
 {
-    log_level: &'static str,
+    app_name: String,
+    about:    String,
+    default_run_env:  RuntimeEnvironmentType,
+}
 
+#[derive(Debug, Deserialize, Getters)]
+pub struct LoggerConfigs
+{
+    log_level:               &'static str,
     is_file_emitted:         bool,
     is_stdout_emitted:       bool,
     is_wasm_console_emitted: bool,
@@ -24,28 +35,5 @@ pub struct LoggingConfigs
     log_file_path: Option<&'static str>,
 }
 
-impl GeneralConfigs
-{
-    pub fn new( file_path: &str, env_prefix: &str, profile: &RunEnvironmentType ) -> GeneralConfigs
-    {
-        Figment::new()
-            .merge( Toml::file( file_path ).nested() )
-            .select( profile.to_string() )
-            .merge( Env::prefixed( env_prefix ) )
-            .extract::<GeneralConfigs>()
-            .expect( "Failed to load general configs" )
-    }
-}
-
-impl LoggingConfigs
-{
-    pub fn new( file_path: &str, env_prefix: &str, profile: &RunEnvironmentType ) -> LoggingConfigs
-    {
-        Figment::new()
-            .merge( Toml::file( file_path ).nested() )
-            .select( profile.to_string() )
-            .merge( Env::prefixed( env_prefix ) )
-            .extract::<LoggingConfigs>()
-            .expect( "Failed to load logging config" )
-    }
-}
+impl ImportFigment<Self> for GeneralConfigs {}
+impl ImportFigment<Self> for LoggerConfigs {}

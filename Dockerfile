@@ -13,17 +13,29 @@ RUN apt-get update \
 ENV CARGO_TERM_COLOR always
 
 WORKDIR /photo-story
+
+# Install mold.
+RUN wget https://github.com/rui314/mold/releases/download/v1.7.1/mold-1.7.1-x86_64-linux.tar.gz \
+ && tar -xzf mold* \
+ && cp -r ./mold*/* /usr/local/
+
+RUN mkdir trunk && cd ./trunk \
+    && wget -qO- https://github.com/thedodd/trunk/releases/download/v0.16.0/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf- \
+    && cp trunk /bin/trunk \
+    && cd ..
+
+RUN mkdir just && cd ./just \
+    && wget -qO- https://github.com/casey/just/releases/download/1.11.0/just-1.11.0-x86_64-unknown-linux-musl.tar.gz | tar -xzf- \
+    && cp just /bin/just \
+    && cd ..
+
+RUN cargo install --locked trunk
+
 COPY ./ .
 
-# Cache dependencies.
-RUN git clone https://github.com/rui314/mold.git \
-    && mkdir ./mold/build \
-    &&./mold/install-build-deps.sh \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ ./mold/ -B ./mold/build \
-    && cmake --build ./mold/build -j $(nproc) \
-    && cmake --install ./mold/build
+RUN rustup target add wasm32-unknown-unknown
 
-RUN cargo build --release
+RUN just build-release
 
 # -------------------------- #
 # --------- IMAGE ---------- #
@@ -32,12 +44,10 @@ FROM gcr.io/distroless/cc
 
 WORKDIR /photo-story
 
-# Copy directories.
-COPY --from=builder /photo-story/configs ./
-
-# Copy binaries.
-COPY --from=builder /photo-story/target/release/backend ./
+COPY --from=builder /bin/bash /bin/bash
+COPY --from=builder /photo-story/photo-story ./
 
 EXPOSE 9000
 
-CMD ["./backend"]
+ENV GENERAL_DEFAULT_RUN_ENV=production
+CMD ["./backend", "--static-dir", "./static", "-l", "debug"]

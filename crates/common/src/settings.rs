@@ -4,14 +4,15 @@ use figment::{
 };
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
-pub enum RunEnvironmentType
+#[derive(Debug, Deserialize, Clone)]
+#[serde( rename_all = "lowercase" )]
+pub enum RuntimeEnvironmentType
 {
     Development,
     Production,
 }
 
-impl std::fmt::Display for RunEnvironmentType
+impl std::fmt::Display for RuntimeEnvironmentType
 {
     fn fmt( &self, f: &mut std::fmt::Formatter ) -> std::fmt::Result
     {
@@ -23,7 +24,7 @@ impl std::fmt::Display for RunEnvironmentType
     }
 }
 
-impl From<&str> for RunEnvironmentType
+impl From<&str> for RuntimeEnvironmentType
 {
     fn from( env: &str ) -> Self
     {
@@ -35,23 +36,30 @@ impl From<&str> for RunEnvironmentType
     }
 }
 
-#[derive(Debug, Deserialize)]
-pub struct CommonConfigs
-{
-    frontend_url: &'static str,
-    backend_url:  &'static str,
-}
-
-impl CommonConfigs
+pub trait ImportFigment<T: Deserialize<'static>>
 {
     #[must_use]
-    pub fn new( file_path: &str, env_prefix: &str, profile: &RunEnvironmentType ) -> Self
+    fn import( file_path: &str, env_prefix: &str, runtime_environment: Option<&RuntimeEnvironmentType> ) -> T
     {
-        Figment::new()
-            .merge( Toml::file( file_path ).nested() )
-            .select( profile.to_string() )
-            .merge( Env::prefixed( env_prefix ) )
-            .extract::<Self>()
-            .expect( "Failed to load general configs" )
+        import::<T>( file_path, env_prefix, runtime_environment )
     }
+}
+
+fn import<T: Deserialize<'static>>(
+    file_path: &str,
+    env_prefix: &str,
+    runtime_environment: Option<&RuntimeEnvironmentType>,
+) -> T
+{
+    let mut figment = Figment::new().merge( Toml::file( file_path ).nested() );
+
+    if let Some( run_env ) = runtime_environment
+    {
+        figment = figment.select( run_env.to_string() );
+    }
+
+    figment
+        .merge( Env::prefixed( env_prefix ) )
+        .extract::<T>()
+        .expect( "Failed to load settings" )
 }

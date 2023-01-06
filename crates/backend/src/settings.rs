@@ -1,50 +1,50 @@
-use common::settings::RunEnvironmentType;
-use figment::{
-    providers::{Env, Format, Toml},
-    Figment,
-};
+#![allow( unused )]
+
+use common::settings::RuntimeEnvironmentType;
+use derive_getters::Getters;
+
+use common::settings::ImportFigment;
+use lazy_static::lazy_static;
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+lazy_static! {
+    pub static ref GENERAL: GeneralConfigs =
+        GeneralConfigs::import( "./configs/backend/general.toml", "general_", None );
+    pub static ref SERVER: ServerConfigs =
+        ServerConfigs::import( "./configs/backend/server.toml", "server_", Some( GENERAL.default_run_env() ) );
+    pub static ref LOGGER: LoggerConfigs = LoggerConfigs::import(
+        "./configs/backend/logger.toml",
+        "logger_",
+        Some( GENERAL.default_run_env() )
+    );
+}
+
+#[derive(Debug, Deserialize, Getters)]
 pub struct GeneralConfigs
 {
-    app_name: &'static str,
-    run_env:  RunEnvironmentType,
+    app_name: String,
+    about:    String,
+    default_run_env:  RuntimeEnvironmentType,
 }
 
-#[derive(Debug, Deserialize)]
-pub struct LoggingConfigs
+#[derive(Debug, Deserialize, Getters)]
+pub struct ServerConfigs
 {
-    log_level: &'static str,
+    addr:       String,
+    port:       u16,
+    static_dir: String,
+}
 
+#[derive(Debug, Deserialize, Getters)]
+pub struct LoggerConfigs
+{
+    log_level:         String,
     is_stdout_emitted: bool,
     is_file_emitted:   bool,
-
-    logs_directory: Option<&'static str>,
+    files_directory:   Option<String>,
+    files_prefix:      Option<String>,
 }
 
-impl GeneralConfigs
-{
-    pub fn new( file_path: &str, env_prefix: &str, profile: &RunEnvironmentType ) -> GeneralConfigs
-    {
-        Figment::new()
-            .merge( Toml::file( file_path ).nested() )
-            .select( profile.to_string() )
-            .merge( Env::prefixed( env_prefix ) )
-            .extract::<GeneralConfigs>()
-            .expect( "Failed to load general configs" )
-    }
-}
-
-impl LoggingConfigs
-{
-    pub fn new( file_path: &str, env_prefix: &str, profile: &RunEnvironmentType ) -> LoggingConfigs
-    {
-        Figment::new()
-            .merge( Toml::file( file_path ).nested() )
-            .select( profile.to_string() )
-            .merge( Env::prefixed( env_prefix ) )
-            .extract::<LoggingConfigs>()
-            .expect( "Failed to load logging config" )
-    }
-}
+impl ImportFigment<Self> for GeneralConfigs {}
+impl ImportFigment<Self> for ServerConfigs {}
+impl ImportFigment<Self> for LoggerConfigs {}

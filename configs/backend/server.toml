@@ -1,0 +1,9 @@
+[default]
+addr = "127.0.0.1"
+port = 9000
+static_dir = "./crates/frontend/dist"
+
+[production]
+addr = "127.0.0.1"
+port = 9000
+static_dir = "./static"

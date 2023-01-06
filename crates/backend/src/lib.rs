@@ -1,3 +1,4 @@
+#![feature( once_cell )]
 #![deny( clippy::all )]
 #![warn( clippy::pedantic )]
 #![warn( clippy::nursery )]
@@ -6,7 +7,7 @@
 
 // Modules.
 pub(crate) mod app;
-pub(crate) mod settings;
+pub mod settings;
 
 // Crate use re-exports.
 pub use color_eyre::eyre::Result;

@@ -9,9 +9,20 @@ path = "src/bin/main.rs"
 
 [dependencies]
 common = { path = "../common" }
+monitoring = { path = "../monitoring" }
 
 color-eyre = "0.6"
+smartstring = "1.0"
+uuid = "1.2"
 tracing = "0.1"
-tokio = { version = "1.21", features = ["rt-multi-thread", "macros"] }
+tracing-log = "0.1"
+tokio = { version = "1.24", features = ["rt-multi-thread", "macros", "full"] }
 serde = { version = "1.0", features = ["derive"] }
 figment = { version = "0.10", features = ["toml", "env"] }
+derive-getters = "0.2"
+lazy_static = "1.4"
+axum = "0.6"
+tower = "0.4"
+axum-extra = { version = "0.4", features = ["spa"] }
+clap = { version = "4.0", features = ["derive"] }
+tower-http = { version = "0.3", features = ["full"] }

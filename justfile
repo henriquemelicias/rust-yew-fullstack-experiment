@@ -4,23 +4,40 @@
 _default:
     @just --list
 
+# Build backend and frontend for release.
+build-release:
+    mkdir -p ./photo-story
+    mkdir -p ./photo-story/static
+    mkdir -p ./photo-story/logs
+    cargo build --release --bin backend
+    trunk build --release ./crates/frontend/index.html --dist ./photo-story/static --public-url /static/
+    mv ./target/release/backend ./photo-story/backend
+    cp -r ./assets ./photo-story
+    cp -r ./configs ./photo-story
+
+# Cleans the project.
+clean:
+    rm -rf ./photo-story
+    cargo clean
+    trunk clean
+
 # Runs clippy on the sources.
 check:
     cargo clippy --locked -- -D warnings
 
 # Builds and opens documentation in-browser without the dependencies docs.
-doc:
+docs:
     cargo doc --open --no-deps
 
 # Builds and opens documentation in-browser with the dependencies docs.
 docs-deps:
     cargo doc --open
 
-# Restart docker
+# Restart docker service.
 docker-restart:
     sudo systemctl restart docker
 
-# Build docker.
+# Build project docker container.
 docker-build:
     docker build -t photo-story:distroless -f Dockerfile .
 
@@ -40,7 +57,12 @@ fix:
 init-git-hooks:
     git config --local core.hooksPath .githooks
 
-# Install Loki Docker Driver plugin
+# Install frontend needed dependencies.
+install-frontend-deps:
+    rustup target add wasm32-unknown-unknown
+    cargo install --locked trunk
+
+# Install Loki Docker Driver plugin to monitor containers.
 install-loki-docker-driver:
     docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
     sudo cp ./monitoring/loki/daemon.json /etc/docker/daemon.json
@@ -57,9 +79,53 @@ install-mold-linker:
     sudo cmake --install ./mold/build/
     rm -rf mold
 
+# Install cargo udeps.
+install-udeps:
+    cargo install cargo-udeps --locked
+
+# Run backend in dev environment.
+run-backend:
+    GENERAL_DEFAULT_RUN_ENV=development cargo run --bin backend
+
+# Run backend in prod environment.
+run-backend-prod:
+    GENERAL_DEFAULT_RUN_ENV=production cargo run --bin backend --release
+
+# Run both backend and frontend in dev with watch.
+run-dev:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    IFS=$'\n\t'
+
+    (trap 'kill 0' SIGINT; \
+    bash -c 'just trunk-serve' & \
+    bash -c 'cargo watch -- just run-backend')
+
+# Run both backend and frontend in prod with watch.
+run-prod:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    IFS=$'\n\t'
+
+    (trap 'kill 0' SIGINT; \
+    bash -c 'just trunk-serve-prod' & \
+    bash -c 'cargo watch -- just run-backend-prod')
+
 # Format using custom rustfmt.
 rustfmt:
     find -type f -path "./crates/*" -path "*.rs" | xargs ./rustfmt --edition 2021
+
+# Serve frontend in a development runtime enviroment.
+trunk-serve:
+    BACKEND_ADDR=$(just _grep_toml_config ./configs/backend/server.toml default addr) \
+    BACKEND_PORT=$(just _grep_toml_config ./configs/backend/server.toml default port) \
+    && GENERAL_DEFAULT_RUN_ENV=development trunk serve ./crates/frontend/index.html --address 127.0.0.1 --port 9010 --proxy-backend=http://$BACKEND_ADDR:$BACKEND_PORT/api/
+
+# Serve frontend in a production runtime enviroment.
+trunk-serve-prod:
+    BACKEND_ADDR=$(just _grep_toml_config ./configs/backend/server.toml production addr) \
+    BACKEND_PORT=$(just _grep_toml_config ./configs/backend/server.toml production port) \
+    && GENERAL_DEFAULT_RUN_ENV=production trunk serve --release ./crates/frontend/index.html --address 127.0.0.1 --port 9010 --proxy-backend=http://$BACKEND_ADDR:$BACKEND_PORT/api/
 
 # Runs all tests.
 test-all:
@@ -69,10 +135,6 @@ test-all:
 test PACKAGE:
     cargo test -p {{PACKAGE}} --locked
 
-# Install cargo udeps.
-udeps-install:
-    cargo install cargo-udeps --locked
-
 # Use udeps to find unused dependencies.
 udeps:
     cargo +nightly udeps
@@ -80,3 +142,6 @@ udeps:
 # Vendor all dependencies locally.
 vendor:
     cargo vendor
+
+_grep_toml_config FILE GROUP_ENV CONFIG_VAR:
+    grep -A 100 "^\[{{GROUP_ENV}}\]" {{FILE}} | grep -m 1 -oP '^{{CONFIG_VAR}}\s?=\s?"?\K[^"?]+'

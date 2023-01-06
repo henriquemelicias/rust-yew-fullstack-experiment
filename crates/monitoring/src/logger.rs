@@ -14,45 +14,24 @@
 //! // Initialize the logger with the desired options. The guards returned by this function must be
 //! // kept alive for the duration of the program.
 //! let ( _maybe_stdout_writer_guard, _maybe_file_writer_guard  ) = logger::init(
-//!     &Level::Info,
-//!     &[OutputType::Stdout, OutputType::File { app_name: "monitoring", directory: "../../logs", prefix: "doc.tests"}]
+//!     &Level::INFO,
+//!     &vec![ OutputType::Stdout, OutputType::File { app_name: "monitoring", directory: "../../logs", prefix: "doc.tests"} ]
 //! );
 //! ```
 
-use tracing_appender::non_blocking::WorkerGuard;
+use axum::{
+    body::{Body, BoxBody, Bytes},
+    http::{HeaderMap, Request, Response},
+    Router,
+};
+use std::time::Duration;
+use tower_http::{classify::ServerErrorsFailureClass, trace as http_trace};
+pub use tracing::Level;
+use tracing::Span;
+pub use tracing_appender::non_blocking::WorkerGuard;
 use tracing_bunyan_formatter::BunyanFormattingLayer;
-use tracing_subscriber::{layer::SubscriberExt, Layer};
-
-/// The log level.
-///
-/// Order of the levels, from least to most verbose:
-///
-/// Error > Warn > Info > Debug > Trace
-///
-pub enum Level
-{
-    Trace,
-    Debug,
-    Info,
-    Warn,
-    Error,
-}
-
-impl Level
-{
-    /// Returns the log level representation as a string.
-    const fn value( &self ) -> &str
-    {
-        match self
-        {
-            Self::Trace => "trace",
-            Self::Debug => "debug",
-            Self::Info => "info",
-            Self::Warn => "warn",
-            Self::Error => "error",
-        }
-    }
-}
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, Layer};
+use uuid::Uuid;
 
 /// Output types for the logs.
 pub enum OutputType<'a>
@@ -89,8 +68,10 @@ pub enum OutputType<'a>
 ///
 /// see [`crate::logger`] for an example.
 ///
-pub fn init( level_filter: &Level, output_types_enabled: &[OutputType] )
-    -> ( Option<WorkerGuard>, Option<WorkerGuard> )
+pub fn init(
+    level_filter: &Level,
+    output_types_enabled: &Vec<OutputType>,
+) -> ( Option<WorkerGuard>, Option<WorkerGuard> )
 {
     // Layers to be used.
     let mut layers = Vec::new();
@@ -138,16 +119,43 @@ pub fn init( level_filter: &Level, output_types_enabled: &[OutputType] )
 
     // Log level filter.
     let log_level_filter = tracing_subscriber::EnvFilter::try_from_default_env()
-        .unwrap_or_else( |_| tracing_subscriber::EnvFilter::new( level_filter.value() ) );
+        .unwrap_or_else( |_| tracing_subscriber::EnvFilter::new( level_filter.as_str() ) );
 
     // Register layers to registry.
-    let register = tracing_subscriber::Registry::default()
+    tracing_subscriber::Registry::default()
         .with( layers )
-        .with( log_level_filter );
-
-    // Default subscriber.
-    tracing::subscriber::set_global_default( register ).expect( "Failed to init global monitoring" );
+        .with( log_level_filter )
+        .init();
 
     tracing::info!( "Initialized logging configuration with instrumentation" );
     ( guard_io_writer, guard_file_writer )
+}
+
+#[must_use]
+pub fn middleware_http_tracing( router: Router ) -> Router
+{
+    let trace_layer = http_trace::TraceLayer::new_for_http()
+        .make_span_with( |_request: &Request<Body>| {
+            let request_id = Uuid::new_v4().to_string();
+            tracing::info_span!("HTTP", %request_id)
+        } )
+        .on_request( |request: &Request<Body>, _span: &Span| {
+            tracing::debug!( "REQUEST{{method={}, path={}}}", request.method(), request.uri().path() );
+        } )
+        .on_response( |response: &Response<BoxBody>, latency: Duration, _span: &Span| {
+            tracing::debug!( "RESPONSE{{status={}, latency={:?}}}", response.status(), latency );
+        } )
+        .on_body_chunk( |chunk: &Bytes, _latency: Duration, _span: &Span| {
+            tracing::debug!( "BODY{{bytes={}}}", chunk.len() );
+        } )
+        .on_eos(
+            |_trailers: Option<&HeaderMap>, stream_duration: Duration, _span: &Span| {
+                tracing::debug!( "EOS{{stream_closed_after={:?}}}", stream_duration );
+            },
+        )
+        .on_failure( |error: ServerErrorsFailureClass, _latency: Duration, _span: &Span| {
+            tracing::error!( "ERROR{{{}}}", error );
+        } );
+
+    router.layer( trace_layer )
 }
