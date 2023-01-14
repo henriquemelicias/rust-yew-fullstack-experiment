@@ -4,5 +4,5 @@
 #![warn( clippy::complexity )]
 #![warn( clippy::perf )]
 
-pub(crate) mod presentation;
-pub(crate) mod settings;
+pub mod presentation;
+pub mod settings;

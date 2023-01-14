@@ -6,7 +6,7 @@
 #![warn( clippy::perf )]
 
 // Modules.
-pub(crate) mod app;
+pub(crate) mod services;
 pub mod settings;
 
 // Crate use re-exports.

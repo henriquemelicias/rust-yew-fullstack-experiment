@@ -5,3 +5,4 @@ mod features;
 pub mod by_features;
 pub mod layout;
 pub mod theme;
+pub mod routes;

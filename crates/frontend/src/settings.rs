@@ -7,8 +7,7 @@ use lazy_static::lazy_static;
 use serde::Deserialize;
 
 lazy_static! {
-    pub static ref GENERAL: GeneralConfigs =
-        GeneralConfigs::import( "./logs/frontend/general.toml", "general_", None );
+    pub static ref GENERAL: GeneralConfigs = GeneralConfigs::import( "./logs/frontend/general.toml", "general_", None );
     pub static ref LOGGER: LoggerConfigs = LoggerConfigs::import(
         "./logs/frontend/logger.toml",
         "logger_",
@@ -19,9 +18,9 @@ lazy_static! {
 #[derive(Debug, Deserialize, Getters)]
 pub struct GeneralConfigs
 {
-    app_name: String,
-    about:    String,
-    default_run_env:  RuntimeEnvironmentType,
+    app_name:        String,
+    about:           String,
+    default_run_env: RuntimeEnvironmentType,
 }
 
 #[derive(Debug, Deserialize, Getters)]

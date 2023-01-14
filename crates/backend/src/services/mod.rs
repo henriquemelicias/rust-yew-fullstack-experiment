@@ -1,9 +1,5 @@
-/*
- * Onion architecture: Services can use domain and infrastructure.
- */
+#[path = "../features/mod.rs"]
+mod features;
 
-#[path = "../domain/mod.rs"]
-mod domain;
-
-#[path = "../infrastructure/mod.rs"]
-mod infrastructure;
+// Modules
+pub mod routes;

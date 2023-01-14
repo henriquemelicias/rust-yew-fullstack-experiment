@@ -84,48 +84,46 @@ install-udeps:
     cargo install cargo-udeps --locked
 
 # Run backend in dev environment.
-run-backend:
-    GENERAL_DEFAULT_RUN_ENV=development cargo run --bin backend
+run-backend PORT:
+    GENERAL_DEFAULT_RUN_ENV=development cargo run --bin backend -- --port {{PORT}}
 
 # Run backend in prod environment.
-run-backend-prod:
-    GENERAL_DEFAULT_RUN_ENV=production cargo run --bin backend --release
+run-backend-prod PORT:
+    GENERAL_DEFAULT_RUN_ENV=production cargo run --bin backend --release -- --port {{PORT}}
 
 # Run both backend and frontend in dev with watch.
-run-dev:
+run-dev BACKEND_PORT FRONTEND_PORT:
     #!/usr/bin/env bash
     set -euo pipefail
     IFS=$'\n\t'
 
     (trap 'kill 0' SIGINT; \
-    bash -c 'just trunk-serve' & \
-    bash -c 'cargo watch -- just run-backend')
+    bash -c 'just trunk-serve {{BACKEND_PORT}} {{FRONTEND_PORT}}' & \
+    bash -c 'cargo watch -- just run-backend {{BACKEND_PORT}}')
 
 # Run both backend and frontend in prod with watch.
-run-prod:
+run-prod BACKEND_PORT FRONTEND_PORT:
     #!/usr/bin/env bash
     set -euo pipefail
     IFS=$'\n\t'
 
     (trap 'kill 0' SIGINT; \
-    bash -c 'just trunk-serve-prod' & \
-    bash -c 'cargo watch -- just run-backend-prod')
+    bash -c 'just trunk-serve-prod {{BACKEND_PORT}} {{FRONTEND_PORT}}' & \
+    bash -c 'cargo watch -- just run-backend-prod {{BACKEND_PORT}}')
 
 # Format using custom rustfmt.
 rustfmt:
     find -type f -path "./crates/*" -path "*.rs" | xargs ./rustfmt --edition 2021
 
 # Serve frontend in a development runtime enviroment.
-trunk-serve:
+trunk-serve BACKEND_PORT PORT:
     BACKEND_ADDR=$(just _grep_toml_config ./configs/backend/server.toml default addr) \
-    BACKEND_PORT=$(just _grep_toml_config ./configs/backend/server.toml default port) \
-    && GENERAL_DEFAULT_RUN_ENV=development trunk serve ./crates/frontend/index.html --address 127.0.0.1 --port 9010 --proxy-backend=http://$BACKEND_ADDR:$BACKEND_PORT/api/
+    && GENERAL_DEFAULT_RUN_ENV=development trunk serve ./crates/frontend/index.html --address 127.0.0.1 --port {{PORT}} --proxy-backend=http://$BACKEND_ADDR:{{BACKEND_PORT}}/api/
 
 # Serve frontend in a production runtime enviroment.
-trunk-serve-prod:
+trunk-serve-prod BACKEND_PORT PORT:
     BACKEND_ADDR=$(just _grep_toml_config ./configs/backend/server.toml production addr) \
-    BACKEND_PORT=$(just _grep_toml_config ./configs/backend/server.toml production port) \
-    && GENERAL_DEFAULT_RUN_ENV=production trunk serve --release ./crates/frontend/index.html --address 127.0.0.1 --port 9010 --proxy-backend=http://$BACKEND_ADDR:$BACKEND_PORT/api/
+    && GENERAL_DEFAULT_RUN_ENV=production trunk serve --release ./crates/frontend/index.html --address 127.0.0.1 --port {{PORT}} --proxy-backend=http://$BACKEND_ADDR:{{BACKEND_PORT}}/api/
 
 # Runs all tests.
 test-all:

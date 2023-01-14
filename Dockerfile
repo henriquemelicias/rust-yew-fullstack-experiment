@@ -47,7 +47,5 @@ WORKDIR /photo-story
 COPY --from=builder /bin/bash /bin/bash
 COPY --from=builder /photo-story/photo-story ./
 
-EXPOSE 9000
-
 ENV GENERAL_DEFAULT_RUN_ENV=production
 CMD ["./backend", "--static-dir", "./static", "-l", "debug"]
