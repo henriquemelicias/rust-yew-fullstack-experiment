@@ -2,7 +2,7 @@ use crate::presentation::by_features;
 use yew::{html, Html};
 use yew_router::prelude::*;
 
-#[derive(Clone, Routable, PartialEq)]
+#[derive(Clone, Routable, PartialEq, Eq)]
 pub enum Route
 {
     #[at( "/" )]
@@ -14,6 +14,7 @@ pub enum Route
     NotFound,
 }
 
+#[must_use]
 pub fn switch( routes: Route ) -> Html
 {
     match routes

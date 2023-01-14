@@ -1,7 +1,8 @@
 #![allow( clippy::ref_option_ref )]
 #![allow( unused )]
 
-use common::settings::{ImportFigment, RuntimeEnvironmentType};
+use common::settings::ImportFigment;
+pub use common::settings::RuntimeEnvironmentType;
 use derive_getters::Getters;
 use lazy_static::lazy_static;
 use serde::Deserialize;

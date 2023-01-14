@@ -1,6 +1,7 @@
 use gloo_net::http::Request;
 use yew::{html, platform::spawn_local, prelude::*};
 
+#[must_use]
 pub fn component() -> Html
 {
     html! { <HelloServer /> }

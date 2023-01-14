@@ -9,11 +9,15 @@ build-release:
     mkdir -p ./photo-story
     mkdir -p ./photo-story/static
     mkdir -p ./photo-story/logs
-    cargo build --release --bin backend
+    cargo build --profile backend-release --bin backend
     trunk build --release ./crates/frontend/index.html --dist ./photo-story/static --public-url /static/
-    mv ./target/release/backend ./photo-story/backend
+    rm -f ./photo-story/backend
+    cp ./target/backend-release/backend ./photo-story/backend
     cp -r ./assets ./photo-story
     cp -r ./configs ./photo-story
+    WASM=$(find ./photo-story/static/*.wasm) && cp $WASM ./target/unoptimized.wasm && wasm-opt -Oz $WASM -o $WASM
+    JS=$(find ./photo-story/static/*.js) && terser $JS -c -m --output $JS
+    # gzip -9 -r ./photo-story/static
 
 # Cleans the project.
 clean:

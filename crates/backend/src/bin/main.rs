@@ -1,4 +1,8 @@
-use axum::{response::IntoResponse, routing::get, Router};
+use axum::{
+    http,
+    response::IntoResponse,
+    routing::{get, get_service},
+};
 use backend::{settings, Result};
 use clap::Parser;
 use monitoring::logger;
@@ -7,6 +11,7 @@ use std::{
     net::{IpAddr, Ipv6Addr, SocketAddr},
     str::FromStr,
 };
+use tower_http::services::{ServeDir, ServeFile};
 
 // Command line arguments interface.
 #[derive(Parser, Debug)]
@@ -82,12 +87,19 @@ fn start_logs( cli_args: &CliArgs ) -> ( Option<logger::WorkerGuard>, Option<log
 #[tokio::main]
 async fn start_server( cli_args: &CliArgs )
 {
-    let app = Router::new()
+    let serve_index = ServeFile::new( format!( "{}/index.html", cli_args.static_dir ) ).precompressed_gzip();
+    let serve_dir = get_service(
+        ServeDir::new( cli_args.static_dir.as_str() )
+            .precompressed_gzip()
+            .not_found_service( serve_index.clone() ),
+    )
+    .handle_error( handle_error );
+    let serve_index = get_service( serve_index ).handle_error( handle_error );
+
+    let app = axum::Router::new()
         .route( "/api/hello", get( hello ) )
-        .merge( axum_extra::routing::SpaRouter::new(
-            "/static",
-            cli_args.static_dir.as_str(),
-        ) );
+        .nest_service( "/static", serve_dir.clone() )
+        .fallback_service( serve_index );
 
     // Http tracing logs middleware layer.
     let app = logger::middleware_http_tracing( app );
@@ -103,6 +115,11 @@ async fn start_server( cli_args: &CliArgs )
         .serve( app.into_make_service() )
         .await
         .expect( "Unable to start server" );
+}
+
+async fn handle_error( _err: std::io::Error ) -> impl IntoResponse
+{
+    ( http::StatusCode::INTERNAL_SERVER_ERROR, "Something went wrong..." )
 }
 
 async fn hello() -> impl IntoResponse { "hello from the backend!" }

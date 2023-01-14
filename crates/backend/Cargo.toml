@@ -8,6 +8,7 @@ name = "backend"
 path = "src/bin/main.rs"
 
 [dependencies]
+frontend = { path = "../frontend" }
 common = { path = "../common" }
 monitoring = { path = "../monitoring" }
 
@@ -22,7 +23,10 @@ figment = { version = "0.10", features = ["toml", "env"] }
 derive-getters = "0.2"
 lazy_static = "1.4"
 axum = "0.6"
-tower = "0.4"
 axum-extra = { version = "0.4", features = ["spa"] }
 clap = { version = "4.0", features = ["derive"] }
-tower-http = { version = "0.3", features = ["full"] }
+tower = { version = "0.4", features = ["make"] }
+tower-http = { version = "0.3", features = ["full", "fs"] }
+yew = { git = "https://github.com/yewstack/yew/", features = ["ssr"] }
+futures = { version = "0.3", features = ["std"], default-features = false }
+axum-macros = "0.3.1"
