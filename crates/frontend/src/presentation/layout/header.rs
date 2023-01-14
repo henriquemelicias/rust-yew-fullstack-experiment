@@ -1,11 +1,9 @@
-use yew::html;
-use yew::prelude::*;
+use yew::{html, prelude::*};
 
 #[function_component( LayoutHeader )]
 pub fn header() -> Html
 {
-    html!
-    {
+    html! {
         <header>
             <p1> { "Header" } </p1>
         </header>

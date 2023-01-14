@@ -1,5 +1,5 @@
-pub mod header;
 pub mod footer;
+pub mod header;
 
-pub use header::LayoutHeader;
 pub use footer::LayoutFooter;
+pub use header::LayoutHeader;

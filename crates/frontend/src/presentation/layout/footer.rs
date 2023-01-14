@@ -1,11 +1,9 @@
-use yew::html;
-use yew::prelude::*;
+use yew::{html, prelude::*};
 
 #[function_component( LayoutFooter )]
 pub fn footer() -> Html
 {
-    html!
-    {
+    html! {
         <footer>
             <p1> { "Footer" } </p1>
         </footer>

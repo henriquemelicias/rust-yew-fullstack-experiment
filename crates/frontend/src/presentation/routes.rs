@@ -1,6 +1,6 @@
-use yew::{Html, html};
-use yew_router::prelude::*;
 use crate::presentation::by_features;
+use yew::{html, Html};
+use yew_router::prelude::*;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route
@@ -28,4 +28,3 @@ pub fn switch( routes: Route ) -> Html
         Route::NotFound => html! { <h1>{ "404" }</h1> },
     }
 }
-
