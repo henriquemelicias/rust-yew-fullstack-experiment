@@ -11,7 +11,19 @@ use std::{
     net::{IpAddr, Ipv6Addr, SocketAddr},
     str::FromStr,
 };
-use tower_http::services::{ServeDir, ServeFile};
+
+use axum::{
+    body::{Body, StreamBody},
+    extract::State,
+    handler::Handler,
+    http::Request,
+};
+use futures::stream::{self, StreamExt};
+use std::convert::Infallible;
+use tower_http::{
+    compression::CompressionLayer,
+    services::{ServeDir, ServeFile},
+};
 
 // Command line arguments interface.
 #[derive(Parser, Debug)]
@@ -34,6 +46,10 @@ struct CliArgs
     /// Set the static files directory
     #[clap( short = 's', long = "static-dir", default_value = settings::SERVER.static_dir().as_str() )]
     static_dir: SmartString,
+
+    /// Set the assets files directory
+    #[clap( long = "assets-dir", default_value = settings::SERVER.assets_dir().as_str() )]
+    assets_dir: SmartString,
 }
 
 fn main() -> Result<()>
@@ -84,26 +100,71 @@ fn start_logs( cli_args: &CliArgs ) -> ( Option<logger::WorkerGuard>, Option<log
     )
 }
 
+#[derive(Clone)]
+struct YewRendererState
+{
+    index_html_before: String,
+    index_html_after:  String,
+}
+
+async fn render_yew_app( State( state ): State<YewRendererState>, url: Request<Body> ) -> impl IntoResponse
+{
+    let renderer = yew::ServerRenderer::<frontend::ServerApp>::with_props( move || frontend::ServerAppProps {
+        url: url.uri().to_string().into(),
+    } );
+
+    StreamBody::new(
+        stream::once( async move { state.index_html_before } )
+            .chain( renderer.render_stream() )
+            .chain( stream::once( async move { state.index_html_after } ) )
+            .map( Result::<_, Infallible>::Ok ),
+    )
+}
+
+
 #[tokio::main]
 async fn start_server( cli_args: &CliArgs )
 {
-    let serve_index = ServeFile::new( format!( "{}/index.html", cli_args.static_dir ) ).precompressed_gzip();
-    let serve_dir = get_service(
-        ServeDir::new( cli_args.static_dir.as_str() )
-            .precompressed_gzip()
-            .not_found_service( serve_index.clone() ),
-    )
-    .handle_error( handle_error );
-    let serve_index = get_service( serve_index ).handle_error( handle_error );
+    // Get index file.
+    let index_html_s = tokio::fs::read_to_string( format!( "{}/index.html", cli_args.static_dir ) )
+        .await
+        .expect( "failed to read index.html" );
+    let ( index_html_before, index_html_after ) = index_html_s.split_once( "<body>" ).unwrap();
+    let mut index_html_before = index_html_before.to_owned();
+    index_html_before.push_str( "<body>" );
 
+    // Create yew render state.
+    let index_html_after = index_html_after.to_owned();
+    let state = YewRendererState {
+        index_html_before,
+        index_html_after,
+    };
+
+    let br_compression = CompressionLayer::new().br( true ).no_gzip().no_deflate();
+
+    // Create render.
+    let renderer = render_yew_app.layer( br_compression.clone() ).with_state( state );
+
+    // Robot.txt file get service.
+    let robots_file = get_service( ServeFile::new( format!( "{}/robots.txt", cli_args.assets_dir ) ) )
+        .layer( br_compression.clone() )
+        .handle_error( handle_error );
+
+    // Static files directory get service.
+    let serve_dir =
+        get_service( ServeDir::new( cli_args.static_dir.as_str() ).precompressed_br() ).handle_error( handle_error );
+
+    // Routes.
     let app = axum::Router::new()
-        .route( "/api/hello", get( hello ) )
+        .route( "/api/hello", get( hello ).layer( br_compression.clone() ) )
+        .route( "/robots.txt", robots_file )
         .nest_service( "/static", serve_dir.clone() )
-        .fallback_service( serve_index );
+        .fallback_service( renderer );
 
     // Http tracing logs middleware layer.
     let app = logger::middleware_http_tracing( app );
 
+    // Serve server.
     let sock_addr = SocketAddr::from( (
         IpAddr::from_str( cli_args.addr.as_str() ).unwrap_or( IpAddr::V6( Ipv6Addr::LOCALHOST ) ),
         cli_args.port,

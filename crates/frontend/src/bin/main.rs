@@ -1,3 +1,10 @@
-use frontend::App;
+use std::env;
 
-fn main() { yew::Renderer::<App>::new().render(); }
+fn main()
+{
+
+    #[cfg( target_arch = "wasm32" )]
+    {
+        yew::Renderer::<frontend::App>::new().hydrate();
+    }
+}

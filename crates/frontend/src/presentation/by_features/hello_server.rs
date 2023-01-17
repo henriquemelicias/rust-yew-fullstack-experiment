@@ -1,3 +1,4 @@
+use crate::utils::unwrap_r_abort;
 use gloo_net::http::Request;
 use yew::{html, platform::spawn_local, prelude::*};
 
@@ -19,7 +20,7 @@ fn hello_server() -> Html
             if data.is_none()
             {
                 spawn_local( async move {
-                    let resp = Request::get( "/api/hello" ).send().await.unwrap();
+                    let resp = unwrap_r_abort( Request::get( "/api/hello" ).send().await );
                     let result = {
                         if !resp.ok()
                         {

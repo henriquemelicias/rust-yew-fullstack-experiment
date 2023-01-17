@@ -1,4 +1,0 @@
-[default]
-app_name = "frontend"
-about = "The frontend."
-default_run_env = "production"

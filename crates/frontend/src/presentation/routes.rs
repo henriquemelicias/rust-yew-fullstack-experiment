@@ -2,7 +2,7 @@ use crate::presentation::by_features;
 use yew::{html, Html};
 use yew_router::prelude::*;
 
-#[derive(Clone, Routable, PartialEq, Eq)]
+#[derive(Copy, Clone, Routable, PartialEq, Eq)]
 pub enum Route
 {
     #[at( "/" )]
@@ -22,7 +22,7 @@ pub fn switch( routes: Route ) -> Html
         Route::Home => html! {
             <>
             <h1>{ "Home" }</h1>
-            <Link<Route> to={Route::HelloServer}>{ "click here to go home" }</Link<Route>>
+            <Link<Route> to={Route::HelloServer}>{ "click here to go to hello-server" }</Link<Route>>
             </>
         },
         Route::HelloServer => by_features::hello_server::component(),

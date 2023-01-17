@@ -11,6 +11,7 @@ path = "src/bin/main.rs"
 frontend = { path = "../frontend" }
 common = { path = "../common" }
 monitoring = { path = "../monitoring" }
+settings = { path = "../settings" }
 
 color-eyre = "0.6"
 smartstring = "1.0"
@@ -23,10 +24,9 @@ figment = { version = "0.10", features = ["toml", "env"] }
 derive-getters = "0.2"
 lazy_static = "1.4"
 axum = "0.6"
-axum-extra = { version = "0.4", features = ["spa"] }
 clap = { version = "4.0", features = ["derive"] }
 tower = { version = "0.4", features = ["make"] }
-tower-http = { version = "0.3", features = ["full", "fs"] }
+tower-http = { version = "0.3", features = ["full", "fs", "compression-br"] }
 yew = { git = "https://github.com/yewstack/yew/", features = ["ssr"] }
 futures = { version = "0.3", features = ["std"], default-features = false }
 axum-macros = "0.3.1"

@@ -4,63 +4,65 @@
 #![warn( clippy::complexity )]
 #![warn( clippy::perf )]
 
+#[cfg( target_arch = "wasm32" )]
+use lol_alloc::{FreeListAllocator, LockedAllocator};
+
+#[cfg( target_arch = "wasm32" )]
 #[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+static ALLOCATOR: LockedAllocator<FreeListAllocator> = LockedAllocator::new( FreeListAllocator::new() );
 
+pub mod domain;
+pub mod features;
+pub mod infrastructure;
 pub mod presentation;
-pub mod settings;
+pub mod utils;
 
-use presentation::{
-    layout::{LayoutFooter, LayoutHeader},
-    routes,
-};
+use presentation::{layout, routes};
 
-use std::collections::HashMap;
 use yew::prelude::*;
-use yew_router::{
-    history::{AnyHistory, History, MemoryHistory},
-    prelude::*,
-};
+use yew_router::{history, history::History, prelude::*};
 
+#[function_component( Layout )]
+pub fn layout() -> Html
+{
+    html!(
+        <>
+            <layout::Header />
+
+            <main>
+                <Switch<routes::Route> render={routes::switch} /> // must be child of <BrowserRouter>
+            </main>
+
+            <layout::Footer />
+        </>
+    )
+}
 
 #[function_component( App )]
 pub fn app() -> Html
 {
     html! {
         <BrowserRouter>
-            <LayoutHeader />
-
-            <main>
-                <Switch<routes::Route> render={routes::switch} /> // must be child of <BrowserRouter>
-            </main>
-
-            <LayoutFooter />
+            <Layout />
         </BrowserRouter>
     }
 }
 
-#[derive(Properties, PartialEq, Eq, Debug)]
+#[derive(Properties, PartialEq, Eq)]
 pub struct ServerAppProps
 {
-    pub url:     AttrValue,
-    pub queries: HashMap<String, String>,
+    pub url: AttrValue,
 }
 
 #[function_component( ServerApp )]
 pub fn server_app( props: &ServerAppProps ) -> Html
 {
-    let history = AnyHistory::from( MemoryHistory::new() );
-    history.push_with_query( &*props.url, &props.queries ).unwrap();
+    let history = history::AnyHistory::from( history::MemoryHistory::new() );
+    history.push( &*props.url );
 
     html! {
         <Router history={history}>
-            <LayoutHeader />
-
-            <main>
-                <Switch<routes::Route> render={routes::switch} /> // must be child of <BrowserRouter>
-            </main>
-
-            <LayoutFooter />
+            <Layout />
         </Router>
     }
 }

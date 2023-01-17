@@ -2,9 +2,12 @@ Dockerfile*
 docker-compose*
 .dockerignore
 .git
+.githooks
+.gitsecret
 .gitignore
 */bin
 */obj
+*/dist
 README.md
 LICENSE
 .vscode
@@ -16,6 +19,7 @@ target
 vendor
 media
 photo-story
-crates/frontend/dist
 logs
+monitoring
 Cargo.lock
+fly.toml

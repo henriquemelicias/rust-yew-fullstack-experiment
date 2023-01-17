@@ -1,6 +1,6 @@
 use yew::{html, prelude::*};
 
-#[function_component( LayoutHeader )]
+#[function_component( Header )]
 pub fn header() -> Html
 {
     html! {

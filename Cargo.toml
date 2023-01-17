@@ -7,9 +7,10 @@ members = [
 
     # Utils.
     "crates/monitoring",
+    "crates/settings",
 ]
 
-default-members = ["crates/backend", "crates/frontend", "crates/monitoring"]
+default-members = ["crates/backend", "crates/frontend"]
 
 [profile.backend-release]
 inherits = "release"
@@ -28,4 +29,5 @@ codegen-units = 1
 opt-level = 'z'
 # link time optimization using using whole-program analysis
 lto = true
-
+# required for wasm-snip
+debug = true

@@ -9,7 +9,7 @@ package "Presentation Layer" as presentationP {
 
         package "feature A" as presentationP_byFeaturesP_featureAP {
             [views] as presentationP_byFeaturesP_featureAP_views
-            [models] as presentationP_byFeaturesP_featureAP_models
+            [viewModels] as presentationP_byFeaturesP_featureAP_viewModels
             [etc...] as presentationP_byFeaturesP_featureAP_etc
         }
 
@@ -54,6 +54,7 @@ package "Infrastructure Layer" as infrastructureP {
     package infrastructureP_byFeaturesP as "by_features" {
 
         package "feature A" as infrastructureP_byFeaturesP_featureAP {
+            [entity] as infrastructureP_byFeaturesP_featureAP_entity
             [remote] as infrastructureP_byFeaturesP_featureAP_remote
             [local] as infrastructureP_byFeaturesP_featureAP_local
             [etc...] as infrastructureP_byFeaturesP_featureAP_etc
@@ -78,6 +79,7 @@ package "Domain Layer" as domainP {
 
             package "feature A" as domainP_byFeaturesP_featureAP {
                 [constants] as domainP_byFeaturesP_featureAP_constants
+                [models] as domainP_byFeaturesP_featureAP_models
                 [enums] as domainP_byFeaturesP_featureAP_enums
                 [utils] as domainP_byFeaturesP_featureAP_utils
                 [etc...] as domainP_byFeaturesP_featureAP_etc
@@ -87,6 +89,7 @@ package "Domain Layer" as domainP {
 
         package "module A" as domainP_byFeaturesP_moduleAP {
             [constants] as domainP_byFeaturesP_moduleAP_constants
+            [models] as domainP_byFeaturesP_moduleAP_models
             [enums] as domainP_byFeaturesP_moduleAP_enums
             [utils] as domainP_byFeaturesP_moduleAP_utils
             [etc...] as domainP_byFeaturesP_moduleAP_etc
