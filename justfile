@@ -203,7 +203,6 @@ _compress_gzip_file FILE EPSILON_RANGE:
 # Compresses file using brotli with multiple compression levels and chooses best within epsilon range size difference.
 #
 # FILE: file to compress.
-# EPSILON_RANGE: 0.0-1.0, 0.0 is best compression, 1.0 is best speed.
 _compress_brotli_file FILE:
     #!/bin/bash
     brotli -q 11 {{FILE}}  -c > {{FILE}}.br # compress
