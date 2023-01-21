@@ -14,6 +14,7 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 common = { path = "../common" }
 
+gloo = "0.8"
 wasm-bindgen = "0.2"
 web-sys = "0.3"
 yew = { git = "https://github.com/yewstack/yew/", features = ["hydration"] }
@@ -24,3 +25,5 @@ concat-string = "1.0"
 ufmt = "0.2"
 lazy_static = "1.4"
 lol_alloc = "0.3"
+indexmap = "1.9"
+gloo-console = "0.2"

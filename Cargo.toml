@@ -12,6 +12,9 @@ members = [
 
 default-members = ["crates/backend", "crates/frontend"]
 
+[profile.dev]
+codegen-units = 1
+
 [profile.backend-release]
 inherits = "release"
 lto = true

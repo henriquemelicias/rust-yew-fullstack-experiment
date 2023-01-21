@@ -1,6 +1,10 @@
-use crate::utils::unwrap_r_abort;
+use crate::{
+    presentation::components::{lightbox::view::LightBox},
+    utils::unwrap_r_abort,
+};
 use gloo_net::http::Request;
 use yew::{html, platform::spawn_local, prelude::*};
+use crate::presentation::components::custom_children_container::attrs;
 
 #[must_use]
 pub fn component() -> Html
@@ -54,7 +58,13 @@ fn hello_server() -> Html
         Some( Ok( data ) ) =>
         {
             html! {
-                <div>{"Got server response: "}{data}</div>
+                <>
+                    <div>{"Got server response: "}{data}</div>
+
+                    <LightBox tag="div" gallery="lightbox-text" attrs={attrs!(href="assets/images/test.jpg")}>
+                        <img src="assets/images/test.jpg" alt="test img" width="500" height="400"/>
+                    </LightBox>
+                </>
             }
         }
         Some( Err( err ) ) =>

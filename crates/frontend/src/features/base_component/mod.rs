@@ -1,11 +1,12 @@
 use std::collections::HashMap;
 use yew::prelude::*;
 
-
 macro_rules! struct_to_hashmap {
     ( $struct_name:ident { $( $field_name:ident : $field_type:ty ),* $(,)? } ) => {
-        impl Settings for $struct_name {
-            fn to_hashmap( &self, key: &str ) -> SettingsHashmap {
+        impl Settings for $struct_name
+        {
+            fn to_hashmap( &self, key: &str ) -> SettingsHashmap
+            {
                 let mut map = SettingsHashmap::new();
                 map.insert( key.to_string(), self.clone().into() );
                 map
@@ -29,17 +30,11 @@ pub enum SettingValue<'a>
     HashMap( HashMap<String, SettingValue<'a>> ),
 }
 
-pub struct BasePluginComponent
-{
-}
+pub struct BasePluginComponent {}
 
 impl BasePluginComponent
 {
-    pub(crate) fn new(settings: Option<Box<dyn Settings>> ) -> Self
-    {
-        Self {
-        }
-    }
+    pub(crate) fn new( settings: Option<Box<dyn Settings>> ) -> Self { Self {} }
 
     // fn on( &self, event_name: &str, callback: Callback<()> ) -> Self
     // {

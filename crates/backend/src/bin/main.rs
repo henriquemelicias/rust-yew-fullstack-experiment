@@ -121,7 +121,6 @@ async fn render_yew_app( State( state ): State<YewRendererState>, url: Request<B
     )
 }
 
-
 #[tokio::main]
 async fn start_server( cli_args: &CliArgs )
 {
@@ -151,14 +150,18 @@ async fn start_server( cli_args: &CliArgs )
         .handle_error( handle_error );
 
     // Static files directory get service.
-    let serve_dir =
+    let serve_static_dir =
         get_service( ServeDir::new( cli_args.static_dir.as_str() ).precompressed_br() ).handle_error( handle_error );
+
+    // Assets files directory get service.
+    let serve_assets_dir = get_service( ServeDir::new( cli_args.assets_dir.as_str() ) ).handle_error( handle_error );
 
     // Routes.
     let app = axum::Router::new()
         .route( "/api/hello", get( hello ).layer( br_compression.clone() ) )
         .route( "/robots.txt", robots_file )
-        .nest_service( "/static", serve_dir.clone() )
+        .nest_service( "/static", serve_static_dir.clone() )
+        .nest_service( "/assets", serve_assets_dir.clone() )
         .fallback_service( renderer );
 
     // Http tracing logs middleware layer.

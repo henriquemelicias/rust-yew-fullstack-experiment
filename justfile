@@ -4,6 +4,18 @@
 _default:
     @just --list
 
+# Build backend and frontend for dev.
+build-dev:
+    mkdir -p ./photo-story
+    mkdir -p ./photo-story/static
+    mkdir -p ./photo-story/logs
+    cargo build --bin backend
+    trunk build ./crates/frontend/index.html --dist ./photo-story/static --public-url /static/
+    rm -f ./photo-story/backend
+    cp ./target/debug/backend ./photo-story/backend
+    cp -r ./assets ./photo-story
+    cp -r ./configs ./photo-story
+
 # Build backend and frontend for release.
 build-release:
     mkdir -p ./photo-story
@@ -69,6 +81,10 @@ docker-compose-down:
 docker-kill-all:
     docker kill $(docker ps -qa)
 
+# Expands macro in file and outputs it to console.
+expand-macro FILE:
+    rustc +nightly -Zunpretty=expanded {{FILE}}
+
 # Cargo and clippy fix.
 fix:
     cargo clippy --fix --allow-dirty --allow-staged
@@ -105,11 +121,11 @@ install-udeps:
 
 # Run backend in dev environment.
 run-backend PORT STATIC_DIR ASSETS_DIR DEBUG_FILTER:
-    BACKEND_GENERAL_RUN_ENV=development cargo run --bin backend -- --port {{PORT}} -s {{STATIC_DIR}} --assets-dir {{ASSETS_DIR}} -l DEBUG_FILTER
+    BACKEND_GENERAL_RUN_ENV=development cargo run --bin backend -- --port {{PORT}} -s {{STATIC_DIR}} --assets-dir {{ASSETS_DIR}} -l {{DEBUG_FILTER}}
 
 # Run backend in prod environment.
 run-backend-prod PORT STATIC_DIR ASSETS_DIR DEBUG_FILTER:
-    BACKEND_GENERAL_RUN_ENV=production cargo run --bin backend --release -- --port {{PORT}} -s {{STATIC_DIR}} --assets-dir {{ASSETS_DIR}} -l DEBUG_FILTER
+    BACKEND_GENERAL_RUN_ENV=production cargo run --bin backend --release -- --port {{PORT}} -s {{STATIC_DIR}} --assets-dir {{ASSETS_DIR}} -l {{DEBUG_FILTER}}
 
 # Run both backend and frontend in dev with watch.
 run-dev PORT="5555" STATIC_DIR="./crates/frontend/dist" ASSETS_DIR="./assets" DEBUG_FILTER="info":
@@ -143,11 +159,11 @@ trunk-watch:
 trunk-watch-prod:
     trunk watch --release ./crates/frontend/index.html --public-url=/static/
 
-# Runs all tests.
+# Runs all macros.
 test-all:
     cargo test --locked
 
-# Runs tests of the specified package.
+# Runs macros of the specified package.
 test PACKAGE:
     cargo test -p {{PACKAGE}} --locked
 

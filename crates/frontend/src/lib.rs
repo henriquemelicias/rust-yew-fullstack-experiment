@@ -11,6 +11,9 @@ use lol_alloc::{FreeListAllocator, LockedAllocator};
 #[global_allocator]
 static ALLOCATOR: LockedAllocator<FreeListAllocator> = LockedAllocator::new( FreeListAllocator::new() );
 
+#[macro_use]
+mod macros;
+
 pub mod domain;
 pub mod features;
 pub mod infrastructure;
