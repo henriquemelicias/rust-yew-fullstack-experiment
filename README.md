@@ -1,1 +1,1 @@
-Some experiments using Rust on full stack using yew.
+Some experiments using Rust on full stack with yew.
