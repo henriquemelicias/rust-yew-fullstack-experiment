@@ -66,7 +66,7 @@ fn hello_server() -> Html
         {
             html! {
                 <>
-                    <div class="teste">{"Got server response: "}{data}</div>
+                    <div>{"Got server response: "}{data}</div>
 
                     <LightboxItem data_src={href.to_string()} gallery="lightbox-test" class={classes!( "container" )}>
                         <img src="assets/images/test.jpg" alt="test img" width="500" height="400"/>
