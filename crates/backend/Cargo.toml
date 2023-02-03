@@ -30,3 +30,4 @@ tower-http = { version = "0.3", features = ["full", "fs", "compression-br"] }
 yew = { git = "https://github.com/yewstack/yew/", features = ["ssr"] }
 futures = { version = "0.3", features = ["std"], default-features = false }
 axum-macros = "0.3.1"
+qstring = "0.7"

@@ -8,6 +8,7 @@ docker-compose*
 */bin
 */obj
 */dist
+node_modules
 README.md
 LICENSE
 .vscode

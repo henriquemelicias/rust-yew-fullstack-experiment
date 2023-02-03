@@ -1,10 +1,9 @@
 use crate::{
-    presentation::components::{lightbox::view::LightBox},
+    presentation::{components::lightbox::item_view::LightboxItem, utils::attrs},
     utils::unwrap_r_abort,
 };
 use gloo_net::http::Request;
 use yew::{html, platform::spawn_local, prelude::*};
-use crate::presentation::components::custom_children_container::attrs;
 
 #[must_use]
 pub fn component() -> Html
@@ -16,6 +15,7 @@ pub fn component() -> Html
 fn hello_server() -> Html
 {
     let data = use_state( || None );
+    let href = use_state( || "assets/images/test.jpg" );
 
     // Request `/api/hello` once
     {
@@ -47,6 +47,13 @@ fn hello_server() -> Html
         } );
     }
 
+    let onclick = {
+        let href = href.clone();
+        Callback::from( move |_: MouseEvent| {
+            href.set( "assets/images/404.jpg" );
+        } )
+    };
+
     match data.as_ref()
     {
         None =>
@@ -59,11 +66,13 @@ fn hello_server() -> Html
         {
             html! {
                 <>
-                    <div>{"Got server response: "}{data}</div>
+                    <div class="text-white px-4 sm:px-8 py-2 sm:py-3 bg-sky-700 hover:bg-sky-800">{"Got server response: "}{data}</div>
 
-                    <LightBox tag="div" gallery="lightbox-text" attrs={attrs!(href="assets/images/test.jpg")}>
+                    <LightboxItem data_src={href.to_string()} gallery="lightbox-test" class={classes!( "container" )}>
                         <img src="assets/images/test.jpg" alt="test img" width="500" height="400"/>
-                    </LightBox>
+                    </LightboxItem>
+
+                    <button {onclick}>{"Click me!"}</button>
                 </>
             }
         }

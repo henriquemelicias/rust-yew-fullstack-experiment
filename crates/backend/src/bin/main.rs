@@ -14,7 +14,7 @@ use std::{
 
 use axum::{
     body::{Body, StreamBody},
-    extract::State,
+    extract::{Query, State},
     handler::Handler,
     http::Request,
 };
@@ -107,10 +107,16 @@ struct YewRendererState
     index_html_after:  String,
 }
 
-async fn render_yew_app( State( state ): State<YewRendererState>, url: Request<Body> ) -> impl IntoResponse
+async fn render_yew_app( State( state ): State<YewRendererState>, req: Request<Body> ) -> impl IntoResponse
 {
+    let req_url = req.uri().path().to_string();
+    let req_queries: Vec<( String, String )> = qstring::QString::from( req.uri().query().unwrap_or( "" ) ).into();
+
     let renderer = yew::ServerRenderer::<frontend::ServerApp>::with_props( move || frontend::ServerAppProps {
-        url: url.uri().to_string().into(),
+        request_data: frontend::RequestData {
+            url:     req_url,
+            queries: req_queries,
+        },
     } );
 
     StreamBody::new(

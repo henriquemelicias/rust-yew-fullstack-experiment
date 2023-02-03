@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   photo-story:
     image: photo-story:distroless
@@ -10,7 +10,7 @@ services:
     volumes:
       - ./logs:/photo-story/logs
     ports:
-      - '9000:9000'
+      - "9000:9000"
     networks:
       - local
 
@@ -19,12 +19,12 @@ services:
     container_name: prometheus
     restart: always
     ports:
-      - '9090:9090'
+      - "9090:9090"
     volumes:
       - ./monitoring/prometheus:/etc/prometheus
     command:
-      - '--config.file=/etc/prometheus/config.yml'
-      - '--web.external-url=http://localhost:9090'
+      - "--config.file=/etc/prometheus/config.yml"
+      - "--web.external-url=http://localhost:9090"
     networks:
       - local
 
@@ -33,7 +33,7 @@ services:
     container_name: loki
     restart: always
     ports:
-      - '3100:3100'
+      - "3100:3100"
     volumes:
       - ./monitoring/loki:/etc/loki
     command:
@@ -58,11 +58,11 @@ services:
     container_name: grafana
     restart: always
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - ./monitoring/grafana/data:/var/lib/grafana
       - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
-    user: '0'
+    user: "0"
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
@@ -73,12 +73,12 @@ services:
     image: prom/alertmanager:latest
     container_name: alertmanager
     ports:
-      - '9093:9093'
+      - "9093:9093"
     volumes:
       - ./monitoring/alertmanager:/etc/alertmanager
     command:
-      - '--config.file=/etc/alertmanager/secret.config.yml'
-      - '--web.external-url=http://localhost:9093'
+      - "--config.file=/etc/alertmanager/secret.config.yml"
+      - "--web.external-url=http://localhost:9093"
     networks:
       - local
 
@@ -87,7 +87,7 @@ services:
     container_name: cadvisor
     restart: always
     ports:
-      - '8080:8080'
+      - "8080:8080"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw

@@ -21,7 +21,7 @@ pub fn switch( routes: Route ) -> Html
     {
         Route::Home => html! {
             <>
-            <h1>{ "Home" }</h1>
+            <h1 class="text-9xl font-bold underline">{ "Home" }</h1>
             <Link<Route> to={Route::HelloServer}>{ "click here to go to hello-server" }</Link<Route>>
             </>
         },

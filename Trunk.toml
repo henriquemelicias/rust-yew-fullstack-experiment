@@ -1,0 +1,24 @@
+[build]
+target = "./crates/frontend/index.html"
+dist = "./target/static"
+release = false
+public_url = "/static/"
+
+[watch]
+watch = [
+    "./crates/frontend/index.html",
+    "./crates/frontend/src",
+    "./crates/frontend/styles",
+    "./assets"
+]
+
+[[proxy]]
+backend = "http://localhost:5555/api"
+
+[clean]
+dist = "./target/static"
+
+[[hooks]]
+stage = "build"
+command = "sh"
+command_arguments = ["-c", "npx tailwindcss -i ./crates/frontend/styles/tailwind.css --minify -c ./crates/frontend/styles/tailwind.config.js -o $TRUNK_STAGING_DIR/tailwind.css"]

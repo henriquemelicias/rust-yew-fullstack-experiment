@@ -3,32 +3,19 @@ use gloo::utils::document;
 use indexmap::IndexMap;
 use web_sys::{Element, Node};
 use yew::{
-    create_portal, function_component, html, use_memo, html::NodeRef, AttrValue, Children, Html, Properties, Callback
+    create_portal, function_component, html, html::NodeRef, use_memo, AttrValue, Callback, Children, Html, Properties,
 };
-
-
-pub fn attrs( entries: &[( &str, &str )] ) -> IndexMap<AttrValue, AttrValue>
-{
-    let mut attributes = IndexMap::with_capacity( entries.len() );
-
-    for ( key, value ) in entries.iter()
-    {
-        attributes.insert( AttrValue::from( key.to_string() ), AttrValue::from( value.to_string() ) );
-    }
-
-    attributes
-}
 
 #[derive(Properties, PartialEq)]
 pub struct CustomChildrenContainerProps
 {
     #[prop_or( AttrValue::from( "a" ) )]
-    pub tag:      AttrValue,
+    pub tag:                  AttrValue,
     #[prop_or( IndexMap::new() )]
-    pub attrs:    IndexMap<AttrValue, AttrValue>,
-    pub children: Children,
+    pub attrs:                IndexMap<AttrValue, AttrValue>,
+    pub children:             Children,
     #[prop_or( Callback::noop() )]
-    pub on_container_element: Callback<Element>
+    pub on_container_element: Callback<Element>,
 }
 
 #[function_component( CustomChildrenContainer )]
@@ -70,4 +57,3 @@ pub fn custom_children_container( props: &CustomChildrenContainerProps ) -> Html
         </>
     }
 }
-

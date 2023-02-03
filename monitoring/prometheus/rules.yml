@@ -1,12 +1,11 @@
 # example
 groups:
-- name: alert_rules
-  rules:
-  - alert: SseClients
-    expr:  incoming_requests > 99999
-    for: 1m
-    labels:
-      severity: high
-    annotations:
-      summary: Too many SSE clients
-
+  - name: alert_rules
+    rules:
+      - alert: SseClients
+        expr: incoming_requests > 99999
+        for: 1m
+        labels:
+          severity: high
+        annotations:
+          summary: Too many SSE clients

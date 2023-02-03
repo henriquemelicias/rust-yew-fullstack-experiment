@@ -20,8 +20,9 @@ pub mod infrastructure;
 pub mod presentation;
 pub mod utils;
 
-use presentation::{layout, routes};
+use presentation::{components::lightbox, layout, routes};
 
+use crate::utils::unwrap_r_abort;
 use yew::prelude::*;
 use yew_router::{history, history::History, prelude::*};
 
@@ -37,6 +38,8 @@ pub fn layout() -> Html
             </main>
 
             <layout::Footer />
+
+            <lightbox::modal_view::LightboxModal />
         </>
     )
 }
@@ -52,16 +55,23 @@ pub fn app() -> Html
 }
 
 #[derive(Properties, PartialEq, Eq)]
+pub struct RequestData
+{
+    pub url:     String,
+    pub queries: Vec<( String, String )>,
+}
+
+#[derive(Properties, PartialEq, Eq)]
 pub struct ServerAppProps
 {
-    pub url: AttrValue,
+    pub request_data: RequestData,
 }
 
 #[function_component( ServerApp )]
 pub fn server_app( props: &ServerAppProps ) -> Html
 {
     let history = history::AnyHistory::from( history::MemoryHistory::new() );
-    history.push( &*props.url );
+    unwrap_r_abort( history.push_with_query( &*props.request_data.url, &props.request_data.queries ) );
 
     html! {
         <Router history={history}>

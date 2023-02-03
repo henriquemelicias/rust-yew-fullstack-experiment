@@ -93,8 +93,9 @@ fix:
 init-git-hooks:
     git config --local core.hooksPath .githooks
 
-# Install frontend needed dependencies.
-install-frontend-deps:
+# Install needed dev dependencies.
+install-deps:
+    npm install
     rustup target add wasm32-unknown-unknown
     cargo install --locked trunk
 
@@ -128,24 +129,28 @@ run-backend-prod PORT STATIC_DIR ASSETS_DIR DEBUG_FILTER:
     BACKEND_GENERAL_RUN_ENV=production cargo run --bin backend --release -- --port {{PORT}} -s {{STATIC_DIR}} --assets-dir {{ASSETS_DIR}} -l {{DEBUG_FILTER}}
 
 # Run both backend and frontend in dev with watch.
-run-dev PORT="5555" STATIC_DIR="./crates/frontend/dist" ASSETS_DIR="./assets" DEBUG_FILTER="info":
+run-dev PORT="5555" DEBUG_FILTER="info":
     #!/usr/bin/env bash
+    mkdir -p ./target/static
+
     set -euo pipefail
     IFS=$'\n\t'
 
     (trap 'kill 0' SIGINT; \
     bash -c 'just trunk-watch' & \
-    bash -c 'cargo watch -- just run-backend {{PORT}} {{STATIC_DIR}} {{ASSETS_DIR}} {{DEBUG_FILTER}}')
+    bash -c 'cargo watch -- just run-backend {{PORT}} ./target/static ./assets {{DEBUG_FILTER}}')
 
 # Run both backend and frontend in prod with watch.
-run-prod PORT="5555" STATIC_DIR="./crates/frontend/dist" ASSETS_DIR="./assets" DEBUG_FILTER="info":
+run-prod PORT="5555" DEBUG_FILTER="info":
     #!/usr/bin/env bash
+    mkdir -p ./target/static
+
     set -euo pipefail
     IFS=$'\n\t'
 
     (trap 'kill 0' SIGINT; \
     bash -c 'just trunk-watch-prod' & \
-    bash -c 'cargo watch -- just run-backend-prod {{PORT}} {{STATIC_DIR}} {{ASSETS_DIR}} {{DEBUG_FILTER}}')
+    bash -c 'cargo watch -- just run-backend-prod {{PORT}} ./target/static ./assets {{DEBUG_FILTER}}')
 
 # Format using custom rustfmt.
 rustfmt:
@@ -153,11 +158,12 @@ rustfmt:
 
 # Serve frontend in a development runtime enviroment.
 trunk-watch:
-    trunk watch ./crates/frontend/index.html --public-url=/static/
+    trunk watch ./crates/frontend/index.html
 
 # Serve frontend in a production runtime enviroment.
 trunk-watch-prod:
-    trunk watch --release ./crates/frontend/index.html --public-url=/static/
+    trunk build --release ./crates/frontend/index.html
+    trunk watch --release ./crates/frontend/index.html --dist ./target/dist
 
 # Runs all macros.
 test-all:

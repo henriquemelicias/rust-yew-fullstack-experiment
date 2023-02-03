@@ -64,10 +64,10 @@ commands:
     steps:
       - restore_cache:
           name: Restore sccache cache
-          keys: 
-          # We have multiple keys to increase the chance of a cache hit
-          # in case the Cargo.lock is updated, we still want to retrieve
-          # some cache
+          keys:
+            # We have multiple keys to increase the chance of a cache hit
+            # in case the Cargo.lock is updated, we still want to retrieve
+            # some cache
             - sccache-cache-stable-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "Cargo.lock" }}
             - sccache-cache-stable-{{ arch }}-{{ .Environment.CIRCLE_JOB }}
             - sccache-cache-stable-{{ arch }}

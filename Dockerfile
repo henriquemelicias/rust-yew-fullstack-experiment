@@ -13,7 +13,8 @@ RUN apt-get update \
         binaryen \
         terser \
         bc \
-        brotli
+        brotli \
+        npm
 
 ENV CARGO_TERM_COLOR always
 
@@ -29,6 +30,10 @@ RUN mkdir just && cd ./just \
     && wget -qO- https://github.com/casey/just/releases/download/1.11.0/just-1.11.0-x86_64-unknown-linux-musl.tar.gz | tar -xzf- \
     && cp just /bin/just \
     && cd ..
+
+COPY package.json .
+
+RUN npm install
 
 RUN cargo install trunk
 RUN cargo install wasm-snip
