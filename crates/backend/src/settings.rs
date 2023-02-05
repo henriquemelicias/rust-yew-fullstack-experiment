@@ -1,9 +1,9 @@
 #![allow( unused )]
 
-use derive_getters::Getters;
 use settings::{ImportFigment, RuntimeEnvironmentType};
 
 use lazy_static::lazy_static;
+use derive_getters::Getters;
 use serde::Deserialize;
 
 lazy_static! {

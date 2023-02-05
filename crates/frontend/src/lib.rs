@@ -54,6 +54,7 @@ pub fn app() -> Html
     }
 }
 
+#[cfg( feature = "ssr" )]
 #[derive(Properties, PartialEq, Eq)]
 pub struct RequestData
 {
@@ -61,12 +62,14 @@ pub struct RequestData
     pub queries: Vec<( String, String )>,
 }
 
+#[cfg( feature = "ssr" )]
 #[derive(Properties, PartialEq, Eq)]
 pub struct ServerAppProps
 {
     pub request_data: RequestData,
 }
 
+#[cfg( feature = "ssr" )]
 #[function_component( ServerApp )]
 pub fn server_app( props: &ServerAppProps ) -> Html
 {

@@ -11,9 +11,6 @@ RUN apt-get update \
     apt-get install --no-install-recommends --assume-yes \
         clang \
         binaryen \
-        terser \
-        bc \
-        brotli \
         npm
 
 ENV CARGO_TERM_COLOR always
@@ -32,7 +29,6 @@ RUN mkdir just && cd ./just \
     && cd ..
 
 COPY package.json .
-
 RUN npm install
 
 RUN cargo install trunk
