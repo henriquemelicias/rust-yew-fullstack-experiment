@@ -8,7 +8,14 @@
             content="Put your description here. Descriptive and concise. But not too long."
         />
         <title>Photo Story</title>
-        <link data-trunk rel="css" href="/styles/tailwind.min.css" />
         <link data-trunk rel="copy-dir" href="../../assets/" />
+        <link data-trunk rel="inline" href="./styles/dist/tailwind-base.css" />
+        <link data-trunk rel="css" href="./styles/dist/tailwind-min-width-640-px.css" media="screen and (min-width: 640px)" />
+        <link data-trunk rel="css" href="./styles/dist/tailwind-min-width-768-px.css" media="screen and (min-width: 768px)" />
+        <link data-trunk rel="css" href="./styles/dist/tailwind-min-width-1024-px.css" media="screen and (min-width: 1024px)" />
+        <link data-trunk rel="css" href="./styles/dist/tailwind-min-width-1280-px.css" media="screen and (min-width: 1280px)" />
+        <link data-trunk rel="css" href="./styles/dist/tailwind-min-width-1536-px.css" media="screen and (min-width: 1536px)" />
+        <link data-trunk rel="css" href="./styles/dist/tailwind-min-width-48-rem.css" media="print" />
+        <link data-trunk rel="css" href="./styles/dist/tailwind-prefers-color-scheme-dark.css" media="(prefers-color-scheme: dark)" />
     </head>
 </html>

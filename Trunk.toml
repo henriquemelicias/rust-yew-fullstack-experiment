@@ -22,4 +22,15 @@ dist = "./static"
 [[hooks]]
 stage = "pre_build"
 command = "sh"
-command_arguments = ["-c", "npx tailwindcss -i ./crates/frontend/styles/tailwind.css --minify -c ./crates/frontend/styles/tailwind.config.js -o ./crates/frontend/styles/tailwind.min.css"]
+command_arguments = [
+    "-c",
+    "just _generate_tailwind_css ./crates/frontend/styles"
+]
+
+[[hooks]]
+stage = "post_build"
+command = "sh"
+command_arguments = [
+    "-c",
+    "just _update_index_html $TRUNK_STAGING_DIR/index.html"
+]

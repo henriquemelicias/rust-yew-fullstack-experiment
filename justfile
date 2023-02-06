@@ -26,15 +26,17 @@ build-release:
     find ./photo-story/static/*.wasm -exec cp {} ./target/unoptimized.wasm \; -exec wasm-snip --snip-rust-panicking-code {} -o {} \; -exec wasm-opt -Oz {} -o {} \;
     find ./photo-story/static/*.js -exec npx terser {} -c -m --output {} \;
     find ./photo-story/static/*.css -exec npx csso {} --comments none --output {} \;
+    # npx critical --b test -c tailwind-base*.css -w 320 -h 480 ./photo-story/static/index.html -i > ./photo-story/static/index.html
 
     # Compress static files.
-    npx brotli-cli compress -q 11 --glob ./photo-story/static/*.wasm
-    npx brotli-cli compress -q 11 --glob ./photo-story/static/*.js
-    npx brotli-cli compress -q 11 --glob ./photo-story/static/*.css
+    npx brotli-cli compress -q 11 --glob --bail false ./photo-story/static/*.wasm || true
+    npx brotli-cli compress -q 11 --glob --bail false ./photo-story/static/*.js || true
+    npx brotli-cli compress -q 11 --glob --bail false ./photo-story/static/*.css || true
 
     # Compress assets.
-    npx brotli-cli compress -q 11 --glob --bail false ./photo-story/assets/*/*
+    npx brotli-cli compress -q 11 --glob --bail false ./photo-story/assets/**/* || true
 
+    # Build finished.
 
 # Cleans the project.
 clean:
@@ -214,3 +216,26 @@ vendor:
 
 _grep_toml_config FILE GROUP_ENV CONFIG_VAR:
     grep -A 100 "^\[{{GROUP_ENV}}\]" {{FILE}} | grep -m 1 -oP '^{{CONFIG_VAR}}\s?=\s?"?\K[^"?]+'
+
+_generate_tailwind_css STYLES_DIR:
+    # Generate tailwind css.
+    npx tailwindcss -i {{STYLES_DIR}}/tailwind.config.css --minify -c {{STYLES_DIR}}/tailwind.config.js -o {{STYLES_DIR}}/dist/tailwind.css
+    # Postcss tailwind css.
+    npx postcss --config {{STYLES_DIR}}/postcss.config.js {{STYLES_DIR}}/dist/tailwind.css -o {{STYLES_DIR}}/dist/tailwind-base.css
+    # Minify tailwind-base.css.
+    npx csso {{STYLES_DIR}}/dist/tailwind-base.css --comments none --output {{STYLES_DIR}}/dist/tailwind-base.css
+
+
+_add_media_to_html_link INDEX_HTML_FILE TEXT_BEFORE MEDIA:
+    sed -i -e 's+\({{TEXT_BEFORE}}\)+\1 {{MEDIA}}+g' {{INDEX_HTML_FILE}}
+
+_update_index_html FILE:
+    just _add_media_to_html_link {{FILE}} "tailwind-min-width-640-px.*\.css\"" "media=\"screen and (min-width:640px)\""
+    just _add_media_to_html_link {{FILE}} "tailwind-min-width-768-px.*\.css\"" "media=\"screen and (min-width:768px)\""
+    just _add_media_to_html_link {{FILE}} "tailwind-min-width-1024-px.*\.css\"" "media=\"screen and (min-width:1024px)\""
+    just _add_media_to_html_link {{FILE}} "tailwind-min-width-1280-px.*\.css\"" "media=\"screen and (min-width:1280px)\""
+    just _add_media_to_html_link {{FILE}} "tailwind-min-width-1536-px.*\.css\"" "media=\"screen and (min-width:1536px)\""
+    just _add_media_to_html_link {{FILE}} "tailwind-min-width-48-rem.*\.css\"" "media=\"print\""
+    just _add_media_to_html_link {{FILE}} "tailwind-prefers-color-scheme-dark.*\.css\"" "media=\"(prefers-color-scheme:dark)\""
+
+

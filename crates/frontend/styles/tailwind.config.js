@@ -1,25 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-const fs = require("fs");
-
-function findAllRsExtensions(dir) {
-  const extensions = [];
-  const files = fs.readdirSync(dir);
-  files.forEach((file) => {
-    const filePath = `${dir}/${file}`;
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
-      extensions.push(...findAllRsExtensions(filePath));
-    } else if (file.endsWith(".rs")) {
-      extensions.push(filePath);
-    }
-  });
-  return extensions;
-}
-
 module.exports = {
-  content: findAllRsExtensions("./crates/frontend/src"),
-  theme: {
-    extend: {},
-  },
-  plugins: [require("daisyui")],
+
+    content: ["./crates/frontend/index.html", "./crates/frontend/styles/tailwind.css", "./crates/frontend/src/**/*.rs"],
+    theme: {
+        extend: {},
+    },
+    plugins: [ require( "daisyui" ) ],
+    screens: {
+        sm: '576px',
+        md: [ { min: '668px', max: '767px' }, { min: '868px' } ],
+        lg: { min: '992px', max: '1199px' },
+        xl: { min: '1200px' },
+        xxl: { max: '1920px' },
+        print: { raw: 'print' },
+        dark: { raw: '(prefers-color-scheme: dark)' },
+    },
 };
