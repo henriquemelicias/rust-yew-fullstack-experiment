@@ -137,19 +137,19 @@ install-mold-linker:
 install-udeps:
     cargo install cargo-udeps --locked
 
-# Convert file in current directory to the webp format using ImageMagick. Recommended: 50 or 80.
+# Convert image in the current directory to the webp format using ImageMagick. Recommended: 50 or 80.
 magick-img-to-webp FILE QUALITY="50":
     FILENAME={{FILE}} && \
     FILENAME=$(echo "${FILENAME%.*}") && \
     magick {{invocation_directory()}}/{{FILE}} -quality {{QUALITY}} -define webp:method=6 {{invocation_directory()}}/$FILENAME-q{{QUALITY}}.webp
 
-# Convert file in current directory to the avif format using ImageMagick. Recommended: 50 or 75.
+# Convert image in the current directory to the avif format using ImageMagick. Recommended: 50 or 75.
 magick-img-to-avif FILE QUALITY="50":
     FILENAME={{FILE}} && \
     FILENAME=$(echo "${FILENAME%.*}") && \
     magick {{invocation_directory()}}/{{FILE}} -quality {{QUALITY}} -define heic:speed=2 {{invocation_directory()}}/$FILENAME-q{{QUALITY}}.avif
 
-# Convert file in current directory to the webp format using ImageMagick. Recommended: 50 or 80.
+# Resize image.
 magick-resize FILE WIDTH HEIGHT:
     FILENAME={{FILE}} && \
     EXTENSION="${FILENAME##*.}" && \
