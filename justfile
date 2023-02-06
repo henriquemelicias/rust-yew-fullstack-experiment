@@ -40,8 +40,7 @@ build-release:
 
 # Cleans the project.
 clean:
-    rm -r ./photo-story
-    rm -r ./node_modules
+    rm -rf ./photo-story ./node_modules ./crates/frontend/styles/dist
     cargo clean
     trunk clean
 
