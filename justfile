@@ -197,7 +197,7 @@ trunk-serve PORT BACKEND_PORT="5550" RENDER="csr":
 trunk-watch RENDER="csr" PUBLIC_URL="/":
     trunk watch --features {{RENDER}} --public-url {{PUBLIC_URL}}
 
-# Runs all macros.
+# Runs all tests.
 test-all:
     cargo test --locked
 
