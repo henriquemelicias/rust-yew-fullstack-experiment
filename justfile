@@ -105,6 +105,7 @@ install-init-dev:
     just init-git-hooks
     npm install
     cargo install trunk
+    cargo install sd
     just install-mold-linker
     just install-udeps
     rustup target add wasm32-unknown-unknown
@@ -237,4 +238,32 @@ _update_index_html FILE:
     just _add_media_to_html_link {{FILE}} "tailwind-min-width-48-rem.*\.css\"" "media=\"print\""
     just _add_media_to_html_link {{FILE}} "tailwind-prefers-color-scheme-dark.*\.css\"" "media=\"(prefers-color-scheme:dark)\""
 
+_format_tailwindcss:
+    #!/usr/bin/env sh
+    FILES=$(find -type f -path "./crates/frontend/*" -path "*.rs" | xargs grep -il -E 'html!\s?{') && \
 
+    # Cycle through each file that contains an html! macro.
+    for FILE in $FILES; do
+
+        # Get each class="..." present.
+        CLASSES=$(grep -oE --group-separator="F" 'class="[^"|(.)]*"' $FILE)
+
+        IFS=$'\n' # make newlines the only separator, needs to be reset.
+
+        # Cycle through each class.
+        for CLASS in $CLASSES; do
+            echo $CLASS
+
+            # Prettify class.
+            CLASS_PRETTY=$(echo "<img $CLASS>" | prettier --plugin prettier-plugin-tailwindcss --parser html --bracket-same-line true --print-width 1000000)
+
+            # Remove extra tag.
+            CLASS_FINAL=$(echo $CLASS_PRETTY | sd "<img \(.*\)>" "\1")
+            # Remove extra characters.
+            CLASS_FINAL=${CLASS_FINAL%??}
+
+            sd -s $CLASS $CLASS_FINAL $FILE
+        done
+
+        unset IFS
+    done

@@ -15,7 +15,6 @@ use crate::{
     utils::{unwrap_abort, unwrap_r_abort},
 };
 use gloo::events::EventListener;
-use gloo_console::info;
 use yew_router::prelude::RouterScopeExt;
 use yewdux::prelude::Dispatch;
 
@@ -49,7 +48,7 @@ impl Component for LightboxModal
         }
     }
 
-    fn update( &mut self, ctx: &Context<Self>, msg: Self::Message ) -> bool
+    fn update( &mut self, _ctx: &Context<Self>, msg: Self::Message ) -> bool
     {
         match msg
         {
