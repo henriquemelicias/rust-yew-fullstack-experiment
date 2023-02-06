@@ -116,7 +116,7 @@ async fn get_yew_render_state( static_dir: &str ) -> YewRendererState
 }
 
 #[tokio::main]
-pub async fn start_server( addr: &str, port: u16, static_dir: &str, assets_dir: &str, )
+pub async fn start_server( addr: &str, port: u16, static_dir: &str, assets_dir: &str )
 {
     let br_compression = CompressionLayer::new().br( true ).no_gzip().no_deflate();
 
@@ -135,12 +135,12 @@ pub async fn start_server( addr: &str, port: u16, static_dir: &str, assets_dir: 
             .handle_error( handle_error );
 
         // Static files directory get service.
-        let serve_static_dir = get_service( ServeDir::new( static_dir ).precompressed_br() )
-            .handle_error( handle_error );
+        let serve_static_dir =
+            get_service( ServeDir::new( static_dir ).precompressed_br() ).handle_error( handle_error );
 
         // Assets files directory get service.
-        let serve_assets_dir = get_service( ServeDir::new( assets_dir ).precompressed_br() )
-            .handle_error( handle_error );
+        let serve_assets_dir =
+            get_service( ServeDir::new( assets_dir ).precompressed_br() ).handle_error( handle_error );
 
         // Routes.
         app = app

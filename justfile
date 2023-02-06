@@ -96,6 +96,11 @@ expand-macro FILE:
 fix:
     cargo clippy --fix --allow-dirty --allow-staged
 
+# Format code.
+format:
+    just rustfmt
+    just _format_tailwindcss
+
 # Make .githooks this project hooks lookup directory.
 init-git-hooks:
     git config --local core.hooksPath .githooks
@@ -246,22 +251,20 @@ _format_tailwindcss:
     for FILE in $FILES; do
 
         # Get each class="..." present.
-        CLASSES=$(grep -oE --group-separator="F" 'class="[^"|(.)]*"' $FILE)
+        CLASSES=$(grep -oE 'class="[^"|(.)]*"' $FILE)
 
         IFS=$'\n' # make newlines the only separator, needs to be reset.
 
         # Cycle through each class.
         for CLASS in $CLASSES; do
-            echo $CLASS
 
             # Prettify class.
             CLASS_PRETTY=$(echo "<img $CLASS>" | prettier --plugin prettier-plugin-tailwindcss --parser html --bracket-same-line true --print-width 1000000)
 
             # Remove extra tag.
-            CLASS_FINAL=$(echo $CLASS_PRETTY | sd "<img \(.*\)>" "\1")
-            # Remove extra characters.
-            CLASS_FINAL=${CLASS_FINAL%??}
+            CLASS_FINAL=$(echo $CLASS_PRETTY | grep -oE 'class="[^"|(.)]*"')
 
+            # Replace in files.
             sd -s $CLASS $CLASS_FINAL $FILE
         done
 

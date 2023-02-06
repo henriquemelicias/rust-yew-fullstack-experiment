@@ -1,5 +1,4 @@
 use backend::settings;
-use monitoring::logger;
 
 use clap::Parser;
 use smartstring::alias::String as SmartString;
@@ -44,7 +43,12 @@ fn main() -> backend::Result<()>
 
     tracing::info!( "Starting backend." );
 
-    backend::start_server( &cli_args.addr, cli_args.port, &cli_args.static_dir, &cli_args.assets_dir );
+    backend::start_server(
+        &cli_args.addr,
+        cli_args.port,
+        &cli_args.static_dir,
+        &cli_args.assets_dir,
+    );
 
     Ok( () )
 }

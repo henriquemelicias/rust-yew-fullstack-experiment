@@ -2,8 +2,8 @@
 
 use settings::{ImportFigment, RuntimeEnvironmentType};
 
-use lazy_static::lazy_static;
 use derive_getters::Getters;
+use lazy_static::lazy_static;
 use serde::Deserialize;
 
 lazy_static! {
